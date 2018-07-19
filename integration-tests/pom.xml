@@ -18,11 +18,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-grizzly2-http</artifactId>
             <scope>test</scope>
@@ -37,21 +32,16 @@
             <artifactId>jersey-media-json-binding</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--<dependency>-->
-        <!--<groupId>org.glassfish.grizzly</groupId>-->
-        <!--<artifactId>grizzly-http-server</artifactId>-->
-        <!--<scope>test</scope>-->
-        <!--</dependency>-->
-        <!--&lt;!&ndash;<dependency>&ndash;&gt;-->
-        <!--&lt;!&ndash;<groupId>org.glassfish.jersey.containers</groupId>&ndash;&gt;-->
-        <!--&lt;!&ndash;<artifactId>jersey-container-grizzly2-http</artifactId>&ndash;&gt;-->
-        <!--&lt;!&ndash;</dependency>&ndash;&gt;-->
-        <!--<dependency>-->
-        <!--<groupId>javax.ws.rs</groupId>-->
-        <!--<artifactId>javax.ws.rs-api</artifactId>-->
-        <!--<scope>test</scope>-->
-        <!--</dependency>-->
-
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.jayway.restassured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
