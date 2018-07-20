@@ -2,10 +2,9 @@ package justinb99.sampleapi.engine.model;
 
 import org.junit.Test;
 
-import java.time.LocalTime;
+import java.util.Set;
 
 import static java.time.DayOfWeek.*;
-import static justinb99.sampleapi.engine.util.CollectionUtil.toSet;
 import static org.junit.Assert.assertEquals;
 
 public class RateConfigTest {
@@ -18,7 +17,7 @@ public class RateConfigTest {
     target.setPrice(1500);
 
     var rate = target.asRate();
-    var expectedDays = toSet(MONDAY, TUESDAY, THURSDAY);
+    var expectedDays = Set.of(MONDAY, TUESDAY, THURSDAY);
     assertEquals(expectedDays, rate.getDays());
 
 //    var startTime = LocalTime.of(9, 0);
