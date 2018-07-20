@@ -1,5 +1,6 @@
 package justinb99.sampleapi.engine.model;
 
+import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Set;
@@ -38,8 +39,9 @@ public class RateConfig {
   public Rate asRate() {
     var rate = new Rate();
 
-    Set<Day> days = Arrays.stream(getDays().split(","))
+    Set<DayOfWeek> days = Arrays.stream(getDays().split(","))
       .map(Day::valueOf)
+      .map(Day::getDayOfWeek)
       .collect(Collectors.toSet());
     rate.setDays(days);
 

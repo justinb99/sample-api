@@ -1,0 +1,10 @@
+* Handle ISO8601 parsing failures
+* Timepans:
+  * Bad: end time is same or before start time
+  * Same day
+  * end time is day after
+  * more than 2 days
+
+
+
+are rates always intra-day?  or can they span days?  can I constrain valid input to always be on the same day?
