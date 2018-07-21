@@ -44,8 +44,8 @@ public class DateTimeRange {
    *
    * @return DayOfWeek if the DateTimeRange is valid, else empty
    */
-  public Optional<DayOfWeek> getDayOfWeek() {
-    return Optional.empty();
+  public DayOfWeek getDayOfWeek() {
+    return null;
   }
 
 

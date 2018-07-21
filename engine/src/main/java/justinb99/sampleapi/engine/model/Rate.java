@@ -1,6 +1,7 @@
 package justinb99.sampleapi.engine.model;
 
 import java.time.*;
+import java.util.Optional;
 import java.util.Set;
 
 public class Rate {
@@ -45,8 +46,9 @@ public class Rate {
   //Per spec, A rate must completely encapsulate a datetime range for it to be available.
   //Rates will never overlap.
   //assumes start and end are both UTC
+  //TODO: dateTimeRange must be valid--on same day and endTime >= startTime
   public boolean isAvailable(DateTimeRange dateTimeRange) {
-    return dateTimeRange.getDayOfWeek()
+    return Optional.of(dateTimeRange.getDayOfWeek())
       .filter(days::contains)
       .filter(dow -> dateTimeRange.getStartTime().compareTo(startTime) >= 0)
       .filter(dow -> dateTimeRange.getEndTime().compareTo(endTime) <= 0)

@@ -22,6 +22,7 @@ public class RateTest {
 
   private static final LocalTime START_TIME = LocalTime.of(10, 0);
   private static final LocalTime END_TIME = LocalTime.of(14, 0);
+  private static final LocalTime NOON = LocalTime.of(12, 0);
 
   @Mock
   private DateTimeRange dateTimeRange;
@@ -33,15 +34,7 @@ public class RateTest {
     target.setStartTime(START_TIME);
     target.setEndTime(END_TIME);
 
-    when(dateTimeRange.getDayOfWeek()).thenReturn(Optional.of(MONDAY));
-  }
-
-  @Test
-  public void isAvailable_no_day_of_week() {
-    target.setDays(Set.of(MONDAY));
-    when(dateTimeRange.getDayOfWeek()).thenReturn(Optional.empty());
-
-    assertFalse(target.isAvailable(dateTimeRange));
+    when(dateTimeRange.getDayOfWeek()).thenReturn(MONDAY);
   }
 
   @Test
@@ -80,10 +73,38 @@ public class RateTest {
   }
 
   @Test
-  public void isAvailable_inverted_time_range() {
-    when(dateTimeRange.getStartTime()).thenReturn(END_TIME);
-    when(dateTimeRange.getEndTime()).thenReturn(START_TIME);
+  public void isAvailable_rate_inverted_times() {
+    target.setStartTime(END_TIME);
+    target.setEndTime(START_TIME);
+
+    when(dateTimeRange.getStartTime()).thenReturn(NOON);
     assertFalse(rangeIsAvailableForDays(Set.of(MONDAY)));
+
+    when(dateTimeRange.getStartTime()).thenReturn(END_TIME);
+    when(dateTimeRange.getEndTime()).thenReturn(END_TIME);
+    assertFalse(rangeIsAvailableForDays(Set.of(MONDAY)));
+
+    when(dateTimeRange.getStartTime()).thenReturn(START_TIME);
+    assertFalse(rangeIsAvailableForDays(Set.of(MONDAY)));
+  }
+
+  @Test
+  public void isAvailable_range_at_same_time() {
+    when(dateTimeRange.getStartTime()).thenReturn(NOON);
+    when(dateTimeRange.getEndTime()).thenReturn(NOON);
+
+    assertTrue(rangeIsAvailableForDays(Set.of(MONDAY)));
+  }
+
+  @Test
+  public void isAvailable_start_and_end_at_same_time() {
+    target.setStartTime(START_TIME);
+    target.setEndTime(START_TIME);
+
+    when(dateTimeRange.getStartTime()).thenReturn(START_TIME);
+    when(dateTimeRange.getEndTime()).thenReturn(START_TIME);
+
+    assertTrue(rangeIsAvailableForDays(Set.of(MONDAY)));
   }
 
 }
