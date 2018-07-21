@@ -13,8 +13,16 @@
 
     <dependencies>
         <dependency>
+            <groupId>justinb99.sampleapi</groupId>
+            <artifactId>engine</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject.extensions</groupId>
+            <artifactId>guice-servlet</artifactId>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>

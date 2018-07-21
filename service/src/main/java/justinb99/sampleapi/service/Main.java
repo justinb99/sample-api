@@ -5,6 +5,9 @@ import com.google.inject.Module;
 import io.logz.guice.jersey.JerseyModule;
 import io.logz.guice.jersey.JerseyServer;
 import io.logz.guice.jersey.configuration.JerseyConfiguration;
+import justinb99.sampleapi.engine.module.EngineModule;
+import org.glassfish.jersey.jackson.JacksonFeature;
+import org.glassfish.jersey.server.ResourceConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,9 +24,12 @@ public class Main {
     var configuration = JerseyConfiguration.builder()
       .addPackage("justinb99.sampleapi.service.resource")
       .addPort(8080)
+      .registerClasses(ObjectMapperProvider.class)
+      .registerClasses(JacksonFeature.class)
       .build();
 
     var modules = new ArrayList<Module>();
+    modules.add(new EngineModule());
     modules.add(new JerseyModule(configuration));
     modules.add(new ServiceModule());
     //TODO: add more modules
