@@ -49,8 +49,7 @@ public class Main {
     var logger = LoggerFactory.getLogger(Main.class);
 
     var configuration = JerseyConfiguration.builder()
-      .addResourceClass(MyResource.class)
-//      .addPackage("justinb99.sampleapi.service")
+      .addPackage("justinb99.sampleapi.service.resource")
       .addPort(8080)
       .build();
 

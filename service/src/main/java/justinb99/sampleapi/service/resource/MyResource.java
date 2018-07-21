@@ -1,4 +1,4 @@
-package justinb99.sampleapi.service;
+package justinb99.sampleapi.service.resource;
 
 import org.slf4j.LoggerFactory;
 
