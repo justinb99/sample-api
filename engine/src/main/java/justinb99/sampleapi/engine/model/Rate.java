@@ -46,10 +46,10 @@ public class Rate {
   //Rates will never overlap.
   //assumes start and end are both UTC
   public boolean isAvailable(DateTimeRange dateTimeRange) {
-//    start.getDayOfWeek();
-    //If days.contains(start.getDayOfWeek())
-//      if (getStartTime() <= start.toLocalTime() && end.toLocalTime() <= getEndTime())
-    //return true;
-    return false;
+    return dateTimeRange.getDayOfWeek()
+      .filter(days::contains)
+      .filter(dow -> dateTimeRange.getStartTime().compareTo(startTime) >= 0)
+      .filter(dow -> dateTimeRange.getEndTime().compareTo(endTime) <= 0)
+      .isPresent();
   }
 }
