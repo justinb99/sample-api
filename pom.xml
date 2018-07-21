@@ -63,27 +63,49 @@
                 <version>${RXJAVA_VERSION}</version>
             </dependency>
             <dependency>
-                <groupId>org.glassfish.jersey</groupId>
-                <artifactId>jersey-bom</artifactId>
+                <groupId>org.glassfish.jersey.containers</groupId>
+                <artifactId>jersey-container-servlet</artifactId>
                 <version>${JERSEY_VERSION}</version>
-                <type>pom</type>
-                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.inject</groupId>
+                <artifactId>jersey-hk2</artifactId>
+                <version>${JERSEY_VERSION}</version>
             </dependency>
             <dependency>
                 <groupId>org.glassfish.jersey.media</groupId>
                 <artifactId>jersey-media-json-jackson</artifactId>
                 <version>${JERSEY_VERSION}</version>
             </dependency>
+            <!--<dependency>-->
+            <!--<groupId>org.glassfish.jersey</groupId>-->
+            <!--<artifactId>jersey-bom</artifactId>-->
+            <!--<version>${JERSEY_VERSION}</version>-->
+            <!--<type>pom</type>-->
+            <!--<scope>import</scope>-->
+            <!--</dependency>-->
+            <!-- guice-jersey includes all the dependencies necessary for getting Jersey running-->
             <dependency>
                 <groupId>io.logz</groupId>
                 <artifactId>guice-jersey</artifactId>
                 <version>1.0.3</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.glassfish.jersey.containers</groupId>
+                        <artifactId>jersey-container-servlet</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.glassfish.jersey.inject</groupId>
+                        <artifactId>jersey-hk2</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
-            <dependency>
-                <groupId>org.glassfish.grizzly</groupId>
-                <artifactId>grizzly-http-server</artifactId>
-                <version>2.4.0</version>
-            </dependency>
+
+            <!--<dependency>-->
+            <!--<groupId>org.glassfish.grizzly</groupId>-->
+            <!--<artifactId>grizzly-http-server</artifactId>-->
+            <!--<version>2.4.0</version>-->
+            <!--</dependency>-->
             <dependency>
                 <groupId>javax.ws.rs</groupId>
                 <artifactId>javax.ws.rs-api</artifactId>
