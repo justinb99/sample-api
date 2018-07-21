@@ -45,7 +45,7 @@ public class Rate {
   //Per spec, A rate must completely encapsulate a datetime range for it to be available.
   //Rates will never overlap.
   //assumes start and end are both UTC
-  public boolean isAvailable(OffsetDateTime start, OffsetDateTime end) {
+  public boolean isAvailable(DateTimeRange dateTimeRange) {
 //    start.getDayOfWeek();
     //If days.contains(start.getDayOfWeek())
 //      if (getStartTime() <= start.toLocalTime() && end.toLocalTime() <= getEndTime())
