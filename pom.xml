@@ -77,19 +77,13 @@
                 <artifactId>jersey-media-json-jackson</artifactId>
                 <version>${JERSEY_VERSION}</version>
             </dependency>
-            <!--<dependency>-->
-            <!--<groupId>org.glassfish.jersey</groupId>-->
-            <!--<artifactId>jersey-bom</artifactId>-->
-            <!--<version>${JERSEY_VERSION}</version>-->
-            <!--<type>pom</type>-->
-            <!--<scope>import</scope>-->
-            <!--</dependency>-->
-            <!-- guice-jersey includes all the dependencies necessary for getting Jersey running-->
             <dependency>
                 <groupId>io.logz</groupId>
                 <artifactId>guice-jersey</artifactId>
                 <version>1.0.3</version>
                 <exclusions>
+                    <!-- guice-jersey depends on Jersey 2.26 and Guice 4.1-->
+                    <!-- Neither play nicely with Java 1.9+ -->
                     <exclusion>
                         <groupId>org.glassfish.jersey.containers</groupId>
                         <artifactId>jersey-container-servlet</artifactId>
@@ -98,14 +92,12 @@
                         <groupId>org.glassfish.jersey.inject</groupId>
                         <artifactId>jersey-hk2</artifactId>
                     </exclusion>
+                    <exclusion>
+                        <groupId>com.google.inject</groupId>
+                        <artifactId>guice</artifactId>
+                    </exclusion>
                 </exclusions>
             </dependency>
-
-            <!--<dependency>-->
-            <!--<groupId>org.glassfish.grizzly</groupId>-->
-            <!--<artifactId>grizzly-http-server</artifactId>-->
-            <!--<version>2.4.0</version>-->
-            <!--</dependency>-->
             <dependency>
                 <groupId>javax.ws.rs</groupId>
                 <artifactId>javax.ws.rs-api</artifactId>

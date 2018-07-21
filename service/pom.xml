@@ -13,6 +13,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-servlet</artifactId>
         </dependency>
@@ -41,8 +45,8 @@
             <artifactId>javax.ws.rs-api</artifactId>
         </dependency>
         <!--<dependency>-->
-            <!--<groupId>org.glassfish.jersey.media</groupId>-->
-            <!--<artifactId>jersey-media-json-jackson</artifactId>-->
+        <!--<groupId>org.glassfish.jersey.media</groupId>-->
+        <!--<artifactId>jersey-media-json-jackson</artifactId>-->
         <!--</dependency>-->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
