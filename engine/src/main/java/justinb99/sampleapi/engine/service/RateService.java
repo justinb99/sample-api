@@ -18,19 +18,11 @@ public class RateService {
 
   @Inject
   public RateService(
-//    List<Rate> rates,
-    ISO8601DateParser dateParser
-  ) {
-     this.rates = Collections.emptyList(); //rates;
-     this.dateParser = dateParser;
-  }
-
-  RateService(
     List<Rate> rates,
     ISO8601DateParser dateParser
   ) {
-    this.rates = rates;
-    this.dateParser = dateParser;
+     this.rates = rates;
+     this.dateParser = dateParser;
   }
 
   public Rate getRate(String start, String end) {

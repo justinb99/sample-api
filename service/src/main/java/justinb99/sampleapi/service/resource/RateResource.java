@@ -2,7 +2,6 @@ package justinb99.sampleapi.service.resource;
 
 import justinb99.sampleapi.engine.model.Rate;
 import justinb99.sampleapi.engine.service.RateService;
-import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;

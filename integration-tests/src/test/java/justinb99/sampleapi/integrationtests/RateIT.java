@@ -41,7 +41,7 @@ public class RateIT {
   public void get_rate_unavailable() {
     var body = given()
       .log().ifValidationFails()
-      .get(RATE_URL + ".xml")
+      .get(RATE_URL + ".json")
       .then()
       .log().ifValidationFails()
       .statusCode(200)
