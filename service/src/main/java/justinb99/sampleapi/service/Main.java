@@ -9,6 +9,7 @@ import io.logz.guice.jersey.configuration.JerseyConfiguration;
 import justinb99.sampleapi.engine.module.EngineModule;
 //import org.glassfish.jersey.jackson.JacksonFeature;
 //import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.jackson.JacksonFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +28,7 @@ public class Main {
       .addPort(8080)
       .registerClasses(ObjectMapperProvider.class)
       .registerClasses(XmlMapperProvider.class)
-//      .registerClasses(JacksonFeature.class)
+      .registerClasses(JacksonFeature.class)
       .registerClasses(JacksonJaxbXMLProvider.class)
       .build();
 

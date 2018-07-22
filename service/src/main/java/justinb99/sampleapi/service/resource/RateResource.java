@@ -29,9 +29,7 @@ public class RateResource {
   @GET
   @Produces(MediaType.APPLICATION_XML)
   public Rate getRateXml() {
-    var response = getRateCommon();
-    LoggerFactory.getLogger(getClass()).info("\n\n****Return " + response + " as xml...");
-    return response;
+    return getRateCommon();
   }
 
   private Rate getRateCommon() {
