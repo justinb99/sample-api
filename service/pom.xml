@@ -16,14 +16,6 @@
             <groupId>justinb99.sampleapi</groupId>
             <artifactId>engine</artifactId>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>com.fasterxml.jackson.dataformat</groupId>-->
-            <!--<artifactId>jackson-dataformat-xml</artifactId>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>com.fasterxml.jackson.jaxrs</groupId>-->
-            <!--<artifactId>jackson-jaxrs-xml-provider</artifactId>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>

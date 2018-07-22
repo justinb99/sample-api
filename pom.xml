@@ -62,16 +62,6 @@
                 <artifactId>jackson-databind</artifactId>
                 <version>${JACKSON_VERSION}</version>
             </dependency>
-            <!--<dependency>-->
-                <!--<groupId>com.fasterxml.jackson.dataformat</groupId>-->
-                <!--<artifactId>jackson-dataformat-xml</artifactId>-->
-                <!--<version>${JACKSON_VERSION}</version>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!--<groupId>com.fasterxml.jackson.jaxrs</groupId>-->
-                <!--<artifactId>jackson-jaxrs-xml-provider</artifactId>-->
-                <!--<version>${JACKSON_VERSION}</version>-->
-            <!--</dependency>-->
             <dependency>
                 <groupId>org.glassfish.jersey.containers</groupId>
                 <artifactId>jersey-container-servlet</artifactId>
@@ -120,6 +110,7 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+            <!-- Add Java EE packages not included by default in Java 9 -->
             <dependency>
                 <groupId>javax.ws.rs</groupId>
                 <artifactId>javax.ws.rs-api</artifactId>
@@ -145,15 +136,11 @@
                 <artifactId>jaxb-core</artifactId>
                 <version>2.3.0.1</version>
             </dependency>
+            <!-- TODO: commons needed? -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>3.7</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpclient</artifactId>
-                <version>4.5.5</version>
             </dependency>
             <dependency>
                 <groupId>commons-io</groupId>
@@ -164,12 +151,6 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>1.7.25</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-simple</artifactId>
-                <version>1.7.25</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
@@ -186,6 +167,12 @@
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
                 <version>2.18.3</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>1.7.25</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
