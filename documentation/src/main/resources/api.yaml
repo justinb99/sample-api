@@ -67,6 +67,28 @@ paths:
       tags:
       - "rate"
       summary: "Get a parking rate as a Protobuf"
+      operationId: "getRateAsProto"
+      produces:
+      - "application/octet-stream"
+      parameters:
+      - $ref: '#/components/parameters/startParam'
+      - $ref: '#/components/parameters/endParam'
+      responses:
+        200:
+          description: >
+            syntax = "proto3";
+
+            package justinb99.sampleapi.schema;
+
+            message Rate {
+                enum Status {
+                    unavailable = 0;
+                }
+                oneof price_or_status {
+                    int32 price = 1;
+                    Status status = 2;
+                }
+            }
 definitions:
   Rate:
     type: "object"

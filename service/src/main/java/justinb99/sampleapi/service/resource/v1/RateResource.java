@@ -1,4 +1,4 @@
-package justinb99.sampleapi.service.resource;
+package justinb99.sampleapi.service.resource.v1;
 
 import justinb99.sampleapi.schema.RateOuterClass.Rate;
 import justinb99.sampleapi.engine.service.RateEngine;
@@ -11,7 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-@Path("/")
+@Path("/v1")
 public class RateResource {
 
   private static final String START = "start";
