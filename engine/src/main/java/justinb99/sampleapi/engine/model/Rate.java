@@ -1,13 +1,12 @@
 package justinb99.sampleapi.engine.model;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import justinb99.sampleapi.schema.RateOuterClass;
 
-import java.time.*;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.Optional;
 import java.util.Set;
 
-@XmlRootElement(name = "rate")
 public class Rate {
 
   private Set<DayOfWeek> days;
@@ -44,32 +43,12 @@ public class Rate {
     this.endTime = endTime;
   }
 
-  @XmlElement
   public Integer getPrice() {
     return price;
   }
 
   public void setPrice(Integer price) {
     this.price = price;
-  }
-
-  public Rate withPrice(Integer price) {
-    setPrice(price);
-    return this;
-  }
-
-  @XmlElement
-  public RateStatus getStatus() {
-    return status;
-  }
-
-  public void setStatus(RateStatus status) {
-    this.status = status;
-  }
-
-  public Rate withStatus(RateStatus rateStatus) {
-    setStatus(rateStatus);
-    return this;
   }
 
   //Per spec, A rate must completely encapsulate a datetime range for it to be available.
@@ -84,8 +63,10 @@ public class Rate {
       .isPresent();
   }
 
-  public Rate justPrice() {
-    return new Rate().withPrice(getPrice());
+  public RateOuterClass.Rate asAvailablePbRate() {
+    return RateOuterClass.Rate.newBuilder()
+      .setPrice(getPrice())
+      .build();
   }
 
 }

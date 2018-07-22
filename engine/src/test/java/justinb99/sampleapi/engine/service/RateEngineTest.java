@@ -2,7 +2,6 @@ package justinb99.sampleapi.engine.service;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.hubspot.jackson.datatype.protobuf.ProtobufModule;
 import justinb99.sampleapi.engine.date.ISO8601DateParser;
 import justinb99.sampleapi.engine.model.DateTimeRange;
@@ -23,7 +22,7 @@ import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class RateServiceTest {
+public class RateEngineTest {
 
   @Mock
   private ISO8601DateParser iso8601DateParser;
@@ -31,7 +30,7 @@ public class RateServiceTest {
   private Rate rate1_isAvailable, rate2_notAvailable, rate3_isAvailable;
   private DateTimeRange dateTimeRange;
   private List<Rate> rates;
-  private RateService target;
+  private RateEngine target;
 
   @Before
   public void before() {
@@ -42,7 +41,7 @@ public class RateServiceTest {
     when(rate3_isAvailable.isAvailable(same(dateTimeRange))).thenReturn(true);
 
     rates = new LinkedList<>();
-    target = new RateService(rates, iso8601DateParser);
+    target = new RateEngine(rates, iso8601DateParser);
   }
 
   @Test
@@ -53,7 +52,6 @@ public class RateServiceTest {
 
     var writer = new ObjectMapper()
       .setSerializationInclusion(JsonInclude.Include.NON_NULL)
-      .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
       .registerModule(new ProtobufModule())
       .writerFor(RateOuterClass.Rate.class)
       .withDefaultPrettyPrinter();

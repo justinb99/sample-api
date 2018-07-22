@@ -1,7 +1,8 @@
 package justinb99.sampleapi.service.resource;
 
-import justinb99.sampleapi.engine.model.Rate;
-import justinb99.sampleapi.engine.service.RateService;
+import justinb99.sampleapi.schema.RateOuterClass.Rate;
+import justinb99.sampleapi.engine.service.RateEngine;
+import justinb99.sampleapi.schema.XmlRate;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -16,11 +17,11 @@ public class RateResource {
   private static final String START = "start";
   private static final String END = "end";
 
-  private final RateService rateService;
+  private final RateEngine rateEngine;
 
   @Inject
-  public RateResource(RateService rateService) {
-    this.rateService = rateService;
+  public RateResource(RateEngine rateEngine) {
+    this.rateEngine = rateEngine;
   }
 
   @Path("rate")
@@ -34,18 +35,21 @@ public class RateResource {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Rate getRateJson(@QueryParam(START) String start, @QueryParam(END) String end) {
-    return getRateCommon(start, end);
+    return rateEngine.getRate(start, end);
   }
 
   @Path("rate.xml")
   @GET
   @Produces(MediaType.APPLICATION_XML)
-  public Rate getRateXml(@QueryParam(START) String start, @QueryParam(END) String end) {
-    return getRateCommon(start, end);
+  public XmlRate getRateXml(@QueryParam(START) String start, @QueryParam(END) String end) {
+    return XmlRate.of(rateEngine.getRate(start, end));
   }
 
-  private Rate getRateCommon(String start, String end) {
-    return rateService.getRate(start, end);
+  @Path("rate.proto")
+  @GET
+  @Produces(MediaType.APPLICATION_OCTET_STREAM)
+  public byte[] getRateProtoBinary(@QueryParam(START) String start, @QueryParam(END) String end) {
+    return rateEngine.getRate(start, end).toByteArray();
   }
 
 }

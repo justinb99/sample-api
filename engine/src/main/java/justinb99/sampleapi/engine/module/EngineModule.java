@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
+import com.hubspot.jackson.datatype.protobuf.ProtobufModule;
 import justinb99.sampleapi.engine.model.Rate;
 import justinb99.sampleapi.engine.model.RateConfig;
 import justinb99.sampleapi.engine.model.RatesConfig;
@@ -33,7 +34,8 @@ public class EngineModule extends AbstractModule {
 
   ObjectMapper createObjectMapper() {
     return new ObjectMapper()
-      .setSerializationInclusion(Include.NON_NULL);
+      .setSerializationInclusion(Include.NON_NULL)
+      .registerModule(new ProtobufModule());
   }
 
   List<Rate> loadConfiguredRates(ObjectMapper objectMapper) {
