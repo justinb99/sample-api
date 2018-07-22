@@ -2,6 +2,7 @@ package justinb99.sampleapi.engine.module;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
@@ -12,6 +13,11 @@ public class EngineModule extends AbstractModule {
   public ObjectMapper provideObjectMapper() {
     return new ObjectMapper()
       .setSerializationInclusion(Include.NON_NULL);
+  }
+
+  @Provides @Singleton
+  public XmlMapper provideXmlMapper() {
+    return new XmlMapper();
   }
 
 }

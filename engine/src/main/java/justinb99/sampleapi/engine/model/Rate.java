@@ -1,15 +1,23 @@
 package justinb99.sampleapi.engine.model;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import java.time.*;
 import java.util.Optional;
 import java.util.Set;
 
+@XmlRootElement(name = "rate")
 public class Rate {
 
   private Set<DayOfWeek> days;
   private LocalTime startTime;
   private LocalTime endTime;
   private Integer price;
+
+  public Rate() {
+
+  }
 
   public Set<DayOfWeek> getDays() {
     return days;
@@ -35,6 +43,7 @@ public class Rate {
     this.endTime = endTime;
   }
 
+  @XmlElement
   public Integer getPrice() {
     return price;
   }
