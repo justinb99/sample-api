@@ -2,16 +2,18 @@ package justinb99.sampleapi.integrationtests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.jayway.restassured.http.ContentType;
-import com.jayway.restassured.response.ValidatableResponse;
 import io.logz.guice.jersey.JerseyServer;
+import io.restassured.http.ContentType;
+import io.restassured.response.ValidatableResponse;
+import justinb99.sampleapi.schema.RateOuterClass;
 import justinb99.sampleapi.service.Main;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import static com.jayway.restassured.RestAssured.given;
+import static io.restassured.RestAssured.given;
+import static justinb99.sampleapi.schema.RateOuterClass.Rate.PRICE_FIELD_NUMBER;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
 
@@ -69,6 +71,24 @@ public class RateIT {
       .body("rate.price", equalTo("1750"));
 
     System.out.println(response.extract().body().asString());
+  }
+
+  @Test
+  public void get_rate_proto() throws Exception {
+    var response = getRate(RATE_URL + ".proto");
+    var contentType = response.extract().contentType();
+    System.out.println("contentType=" + contentType);
+    System.out.println(ContentType.BINARY.getContentTypeStrings()[0]);
+    assertEquals(ContentType.BINARY.getContentTypeStrings()[0], contentType);
+    var responseBytes = response
+      .contentType(ContentType.BINARY)
+      .extract()
+      .body()
+      .asByteArray();
+
+    var rate = RateOuterClass.Rate.parseFrom(responseBytes);
+    assertEquals(1750, rate.getPrice());
+    assertEquals(PRICE_FIELD_NUMBER, rate.getPriceOrStatusCase().getNumber());
   }
 
   private void getJsonRate(String url) {
