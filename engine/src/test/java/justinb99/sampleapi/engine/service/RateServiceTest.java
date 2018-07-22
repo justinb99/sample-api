@@ -1,8 +1,13 @@
 package justinb99.sampleapi.engine.service;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.hubspot.jackson.datatype.protobuf.ProtobufModule;
 import justinb99.sampleapi.engine.date.ISO8601DateParser;
 import justinb99.sampleapi.engine.model.DateTimeRange;
 import justinb99.sampleapi.engine.model.Rate;
+import justinb99.sampleapi.schema.RateOuterClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,6 +43,29 @@ public class RateServiceTest {
 
     rates = new LinkedList<>();
     target = new RateService(rates, iso8601DateParser);
+  }
+
+  @Test
+  public void pb() throws Exception {
+    var rate = RateOuterClass.Rate.newBuilder()
+      .setPrice(1500)
+      .build();
+
+    var writer = new ObjectMapper()
+      .setSerializationInclusion(JsonInclude.Include.NON_NULL)
+      .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
+      .registerModule(new ProtobufModule())
+      .writerFor(RateOuterClass.Rate.class)
+      .withDefaultPrettyPrinter();
+
+    var json = writer.writeValueAsString(rate);
+    System.out.println(json);
+
+    rate = RateOuterClass.Rate.newBuilder()
+      .setStatus(RateOuterClass.Rate.Status.unavailable)
+      .build();
+    json = writer.writeValueAsString(rate);
+    System.out.println(json);
   }
 
   @Test

@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package justinb99.sampleapi.schema;
+
+message Rate {
+    enum Status {
+        unavailable = 0;
+    }
+    oneof price_or_status {
+        int32 price = 1;
+        Status status = 2;
+    }
+}
