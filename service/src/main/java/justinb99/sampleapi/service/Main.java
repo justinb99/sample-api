@@ -1,6 +1,6 @@
 package justinb99.sampleapi.service;
 
-import com.fasterxml.jackson.jaxrs.xml.JacksonJaxbXMLProvider;
+//import com.fasterxml.jackson.jaxrs.xml.JacksonJaxbXMLProvider;
 import com.google.inject.Guice;
 import com.google.inject.Module;
 import io.logz.guice.jersey.JerseyModule;
@@ -27,9 +27,8 @@ public class Main {
       .addPackage("justinb99.sampleapi.service.resource")
       .addPort(8080)
       .registerClasses(ObjectMapperProvider.class)
-      .registerClasses(XmlMapperProvider.class)
       .registerClasses(JacksonFeature.class)
-      .registerClasses(JacksonJaxbXMLProvider.class)
+//      .registerClasses(JacksonJaxbXMLProvider.class)
       .build();
 
     var modules = new ArrayList<Module>();
