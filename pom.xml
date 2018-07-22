@@ -136,7 +136,6 @@
                 <artifactId>jaxb-core</artifactId>
                 <version>2.3.0.1</version>
             </dependency>
-            <!-- TODO: commons needed? -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>

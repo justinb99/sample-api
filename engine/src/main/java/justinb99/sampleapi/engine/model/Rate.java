@@ -14,6 +14,7 @@ public class Rate {
   private LocalTime startTime;
   private LocalTime endTime;
   private Integer price;
+  private RateStatus status;
 
   public Rate() {
 
@@ -52,6 +53,25 @@ public class Rate {
     this.price = price;
   }
 
+  public Rate withPrice(Integer price) {
+    setPrice(price);
+    return this;
+  }
+
+  @XmlElement
+  public RateStatus getStatus() {
+    return status;
+  }
+
+  public void setStatus(RateStatus status) {
+    this.status = status;
+  }
+
+  public Rate withStatus(RateStatus rateStatus) {
+    setStatus(rateStatus);
+    return this;
+  }
+
   //Per spec, A rate must completely encapsulate a datetime range for it to be available.
   //Rates will never overlap.
   //assumes start and end are both UTC
@@ -63,4 +83,9 @@ public class Rate {
       .filter(dow -> dateTimeRange.getEndTime().compareTo(endTime) <= 0)
       .isPresent();
   }
+
+  public Rate justPrice() {
+    return new Rate().withPrice(getPrice());
+  }
+
 }

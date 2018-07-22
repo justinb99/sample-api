@@ -9,6 +9,14 @@ public class DateTimeRange {
   private OffsetDateTime start;
   private OffsetDateTime end;
 
+  public DateTimeRange() {
+  }
+
+  public DateTimeRange(OffsetDateTime start, OffsetDateTime end) {
+    this.start = start;
+    this.end = end;
+  }
+
   public OffsetDateTime getStart() {
     return start;
   }

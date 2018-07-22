@@ -12,14 +12,16 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import static com.jayway.restassured.RestAssured.given;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
 
 public class RateIT {
 
   private static final String RATE_URL = "http://localhost:8080/rate";
 
-  private static final String START = "2015-07-01T07:00:00Z";
-  private static final String END = "2015-07-01T12:00:00Z";
+  //2018-07-18 was a Wednesday
+  private static final String START = "2018-07-18T07:00:00Z";
+  private static final String END = "2018-07-18T12:00:00Z";
 
   private static JerseyServer server;
   private static ObjectMapper objectMapper;
@@ -36,6 +38,21 @@ public class RateIT {
   }
 
   @Test
+  public void get_rate_unavailable() {
+    var body = given()
+      .log().ifValidationFails()
+      .get(RATE_URL + ".xml")
+      .then()
+      .log().ifValidationFails()
+      .statusCode(200)
+      .extract()
+      .body()
+      .asString();
+
+    System.out.println(body);
+  }
+
+  @Test
   public void get_rate() {
     getJsonRate(RATE_URL);
   }
@@ -49,15 +66,9 @@ public class RateIT {
   public void get_rate_xml() {
     var response = getRate(RATE_URL + ".xml")
       .contentType(ContentType.XML)
-      .extract()
-      .body().asString();
+      .body("rate.price", equalTo("1750"));
 
-    System.out.println(response);
-
-//    var expected = createObjectNode();
-//    expected.put("price", 1500);
-
-//    assertEquals(expected, response);
+    System.out.println(response.extract().body().asString());
   }
 
   private void getJsonRate(String url) {
@@ -67,7 +78,7 @@ public class RateIT {
       .as(ObjectNode.class);
 
     var expected = createObjectNode();
-    expected.put("price", 1500);
+    expected.put("price", 1750);
 
     assertEquals(expected, response);
   }

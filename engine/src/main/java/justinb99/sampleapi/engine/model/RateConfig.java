@@ -36,6 +36,7 @@ public class RateConfig {
     this.price = price;
   }
 
+  //TODO test remainder
   public Rate asRate() {
     var rate = new Rate();
 
@@ -45,11 +46,18 @@ public class RateConfig {
       .collect(Collectors.toSet());
     rate.setDays(days);
 
-//    var splitTimes = getTimes().split("-");
-//    var startTime = LocalTime.of()
+    var splitTimes = getTimes().split("-");
+    rate.setStartTime(parse4DigitTime(splitTimes[0]));
+    rate.setEndTime(parse4DigitTime(splitTimes[1]));
 
     rate.setPrice(getPrice());
 
     return rate;
+  }
+
+  private LocalTime parse4DigitTime(String time) {
+    int hour = Integer.valueOf(time.substring(0, 2));
+    int minute = Integer.valueOf(time.substring(2, 4));
+    return LocalTime.of(hour, minute);
   }
 }

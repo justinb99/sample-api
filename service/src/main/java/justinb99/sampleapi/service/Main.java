@@ -1,19 +1,21 @@
 package justinb99.sampleapi.service;
 
 //import com.fasterxml.jackson.jaxrs.xml.JacksonJaxbXMLProvider;
+
 import com.google.inject.Guice;
 import com.google.inject.Module;
 import io.logz.guice.jersey.JerseyModule;
 import io.logz.guice.jersey.JerseyServer;
 import io.logz.guice.jersey.configuration.JerseyConfiguration;
 import justinb99.sampleapi.engine.module.EngineModule;
-//import org.glassfish.jersey.jackson.JacksonFeature;
-//import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+
+//import org.glassfish.jersey.jackson.JacksonFeature;
+//import org.glassfish.jersey.server.ResourceConfig;
 
 /**
  * Main class.
@@ -28,14 +30,12 @@ public class Main {
       .addPort(8080)
       .registerClasses(ObjectMapperProvider.class)
       .registerClasses(JacksonFeature.class)
-//      .registerClasses(JacksonJaxbXMLProvider.class)
       .build();
 
     var modules = new ArrayList<Module>();
     modules.add(new EngineModule());
     modules.add(new JerseyModule(configuration));
     modules.add(new ServiceModule());
-    //TODO: add more modules
 
     var server = Guice.createInjector(modules)
       .getInstance(JerseyServer.class);

@@ -4,13 +4,13 @@ import java.util.List;
 
 public class RatesConfig {
 
-  private List<RatesConfig> rates;
+  private List<RateConfig> rates;
 
-  public List<RatesConfig> getRates() {
+  public List<RateConfig> getRates() {
     return rates;
   }
 
-  public void setRates(List<RatesConfig> rates) {
+  public void setRates(List<RateConfig> rates) {
     this.rates = rates;
   }
 
