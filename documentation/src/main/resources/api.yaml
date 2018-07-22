@@ -1,0 +1,98 @@
+swagger: "2.0"
+info:
+  description: "An API that allows a user to get a parking rate for a time span."
+  version: "1.0.0"
+  title: "Rate API"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:8080"
+basePath: "/v1"
+tags:
+- name: "rate"
+  description: "Parking rate for a time span"
+schemes:
+- "http"
+paths:
+  /rate:
+    get:
+      tags:
+      - "rate"
+      summary: "Get a parking rate for a time span"
+      operationId: "getRateAsDefault"
+      produces:
+      - "application/json"
+      parameters:
+      - $ref: '#/components/parameters/startParam'
+      - $ref: '#/components/parameters/endParam'
+      responses:
+        200:
+          description: "Parking Rate"
+          schema:
+            $ref: "#/definitions/Rate"
+  /rate.json:
+    get:
+      tags:
+      - "rate"
+      summary: "Get a parking rate as JSON"
+      operationId: "getRateAsJson"
+      produces:
+      - "application/json"
+      parameters:
+      - $ref: '#/components/parameters/startParam'
+      - $ref: '#/components/parameters/endParam'
+      responses:
+        200:
+          description: "Parking Rate"
+          schema:
+            $ref: "#/definitions/Rate"
+  /rate.xml:
+    get:
+      tags:
+      - "rate"
+      summary: "Get a parking rate as XML"
+      operationId: "getRateAsXML"
+      produces:
+      - "application/xml"
+      parameters:
+      - $ref: '#/components/parameters/startParam'
+      - $ref: '#/components/parameters/endParam'
+      responses:
+        200:
+          description: "Parking Rate"
+          schema:
+            $ref: "#/definitions/Rate"
+  /rate.proto:
+    get:
+      tags:
+      - "rate"
+      summary: "Get a parking rate as a Protobuf"
+definitions:
+  Rate:
+    type: "object"
+    properties:
+      price:
+        description: "Price of the parking rate.  Only populated if a rate is available for the submitted time span"
+        type: "integer"
+        format: "int32"
+      status:
+        description: "Indicates parking rate is unavailable for submitted time span.  Only populated when a parking rate is unavailable"
+        type: "string"
+        enum:
+        - unavailable
+    xml:
+      name: "rate"
+components:
+  parameters:
+    startParam:
+      name: "start"
+      in: "query"
+      description: "Start of the time span (inclusive)"
+      type: "string"
+      format: "date-time"
+    endParam:
+      name: "end"
+      in: "query"
+      description: "End of the time span (inclusive)"
+      type: "string"
+      format: "date-time"
