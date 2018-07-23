@@ -9,7 +9,6 @@ import justinb99.sampleapi.schema.RateOuterClass;
 import justinb99.sampleapi.service.Main;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static io.restassured.RestAssured.given;
@@ -19,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 
 public class RateIT {
 
-  private static final String RATE_URL = "http://localhost:8080/rate";
+  private static final String RATE_URL = "http://localhost:8080/v1/rate";
 
   //2018-07-18 was a Wednesday
   private static final String START = "2018-07-18T07:00:00Z";
@@ -41,17 +40,20 @@ public class RateIT {
 
   @Test
   public void get_rate_unavailable() {
-    var body = given()
+    var response = given()
       .log().ifValidationFails()
       .get(RATE_URL + ".json")
       .then()
       .log().ifValidationFails()
       .statusCode(200)
+      .contentType(ContentType.JSON)
       .extract()
-      .body()
-      .asString();
+      .as(ObjectNode.class);
 
-    System.out.println(body);
+    ObjectNode expected = createObjectNode();
+    expected.put("status", "unavailable");
+
+    assertEquals(expected, response);
   }
 
   @Test
@@ -66,21 +68,14 @@ public class RateIT {
 
   @Test
   public void get_rate_xml() {
-    var response = getRate(RATE_URL + ".xml")
+    getRate(RATE_URL + ".xml")
       .contentType(ContentType.XML)
       .body("rate.price", equalTo("1750"));
-
-    System.out.println(response.extract().body().asString());
   }
 
   @Test
   public void get_rate_proto() throws Exception {
-    var response = getRate(RATE_URL + ".proto");
-    var contentType = response.extract().contentType();
-    System.out.println("contentType=" + contentType);
-    System.out.println(ContentType.BINARY.getContentTypeStrings()[0]);
-    assertEquals(ContentType.BINARY.getContentTypeStrings()[0], contentType);
-    var responseBytes = response
+    var responseBytes = getRate(RATE_URL + ".proto")
       .contentType(ContentType.BINARY)
       .extract()
       .body()

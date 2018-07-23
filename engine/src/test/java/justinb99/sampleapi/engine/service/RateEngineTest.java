@@ -44,27 +44,27 @@ public class RateEngineTest {
     target = new RateEngine(rates, iso8601DateParser);
   }
 
-  @Test
-  public void pb() throws Exception {
-    var rate = RateOuterClass.Rate.newBuilder()
-      .setPrice(1500)
-      .build();
-
-    var writer = new ObjectMapper()
-      .setSerializationInclusion(JsonInclude.Include.NON_NULL)
-      .registerModule(new ProtobufModule())
-      .writerFor(RateOuterClass.Rate.class)
-      .withDefaultPrettyPrinter();
-
-    var json = writer.writeValueAsString(rate);
-    System.out.println(json);
-
-    rate = RateOuterClass.Rate.newBuilder()
-      .setStatus(RateOuterClass.Rate.Status.unavailable)
-      .build();
-    json = writer.writeValueAsString(rate);
-    System.out.println(json);
-  }
+//  @Test
+//  public void pb() throws Exception {
+//    var rate = RateOuterClass.Rate.newBuilder()
+//      .setPrice(1500)
+//      .build();
+//
+//    var writer = new ObjectMapper()
+//      .setSerializationInclusion(JsonInclude.Include.NON_NULL)
+//      .registerModule(new ProtobufModule())
+//      .writerFor(RateOuterClass.Rate.class)
+//      .withDefaultPrettyPrinter();
+//
+//    var json = writer.writeValueAsString(rate);
+//    System.out.println(json);
+//
+//    rate = RateOuterClass.Rate.newBuilder()
+//      .setStatus(RateOuterClass.Rate.Status.unavailable)
+//      .build();
+//    json = writer.writeValueAsString(rate);
+//    System.out.println(json);
+//  }
 
   @Test
   public void getRate_empty() {

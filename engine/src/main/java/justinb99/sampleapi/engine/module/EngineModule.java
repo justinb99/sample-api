@@ -2,6 +2,9 @@ package justinb99.sampleapi.engine.module;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import com.hubspot.jackson.datatype.protobuf.ProtobufModule;
@@ -12,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,14 +32,27 @@ public class EngineModule extends AbstractModule {
     bind(ObjectMapper.class)
       .toInstance(objectMapper);
 
+    bind(XmlMapper.class)
+      .toInstance(createXmlMapper());
+
     bind(new TypeLiteral<List<Rate>>() {})
       .toInstance(loadConfiguredRates(objectMapper));
   }
 
   ObjectMapper createObjectMapper() {
-    return new ObjectMapper()
-      .setSerializationInclusion(Include.NON_NULL)
+    return configureObjectMapper(new ObjectMapper());
+  }
+
+  XmlMapper createXmlMapper() {
+    var xmlMapper = new XmlMapper();
+    xmlMapper.configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true);
+    return configureObjectMapper(xmlMapper);
+  }
+
+  private <T extends ObjectMapper> T configureObjectMapper(T objectMapper) {
+    objectMapper.setSerializationInclusion(Include.NON_NULL)
       .registerModule(new ProtobufModule());
+    return objectMapper;
   }
 
   List<Rate> loadConfiguredRates(ObjectMapper objectMapper) {
@@ -46,8 +63,8 @@ public class EngineModule extends AbstractModule {
     try {
       config = jsonReader.readValue(ratesStream);
     } catch (IOException e) {
-      logger.error("Failed to deserialze configured Rates", e);
-      return Collections.emptyList();
+      logger.error("Failed to deserialze configured Rates. Cannot start.", e);
+      throw new RuntimeException(e);
     }
 
     return config.getRates().stream()

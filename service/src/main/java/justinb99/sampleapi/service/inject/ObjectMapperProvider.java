@@ -1,4 +1,4 @@
-package justinb99.sampleapi.service;
+package justinb99.sampleapi.service.inject;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

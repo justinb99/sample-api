@@ -1,62 +1,49 @@
 package justinb99.sampleapi.service;
 
-//import com.fasterxml.jackson.jaxrs.xml.JacksonJaxbXMLProvider;
-
 import com.google.inject.Guice;
-import com.google.inject.Module;
-import io.logz.guice.jersey.JerseyModule;
+import com.google.inject.Injector;
 import io.logz.guice.jersey.JerseyServer;
-import io.logz.guice.jersey.configuration.JerseyConfiguration;
 import justinb99.sampleapi.engine.module.EngineModule;
-import org.glassfish.jersey.jackson.JacksonFeature;
+import justinb99.sampleapi.service.inject.ServiceModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-
-//import org.glassfish.jersey.jackson.JacksonFeature;
-//import org.glassfish.jersey.server.ResourceConfig;
-
-/**
- * Main class.
- */
 public class Main {
 
   private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
-  public static JerseyServer startServer() throws Exception {
-    var configuration = JerseyConfiguration.builder()
-      .addPackage("justinb99.sampleapi.service.resource")
-      .addPort(8080)
-      .registerClasses(ObjectMapperProvider.class)
-      .registerClasses(JacksonFeature.class)
-      .build();
-
-    var modules = new ArrayList<Module>();
-    modules.add(new EngineModule());
-    modules.add(new JerseyModule(configuration));
-    modules.add(new ServiceModule());
-
-    var server = Guice.createInjector(modules)
-      .getInstance(JerseyServer.class);
-
-    server.start();
-
-    return server;
-  }
-
   public static void main(String[] args) throws Exception {
-    var server = startServer();
+    logger.info("Starting Rate server...");
 
-    logger.info("Rate server started!");
+    var server = startServer();
 
     Runtime.getRuntime().addShutdownHook(new Thread(() -> {
       try {
+        logger.info("Stopping Rate server...");
         server.stop();
+        logger.info("Rate server stopped!");
       } catch (Exception e) {
         throw new RuntimeException(e);
       }
     }));
+  }
+
+  public static JerseyServer startServer() throws Exception {
+    return startServer(createInjector());
+  }
+
+  static Injector createInjector() {
+    return Guice.createInjector(
+      new EngineModule(),
+      new ServiceModule()
+    );
+  }
+
+  static JerseyServer startServer(Injector injector) throws Exception {
+    var server = injector.getInstance(JerseyServer.class);
+    server.start();
+    logger.info("Rate server started!");
+    return server;
   }
 
 }
