@@ -24,7 +24,7 @@
             </modules>
         </profile>
         <profile>
-            <id>docs</id>
+            <id>documentation</id>
             <modules>
                 <module>documentation</module>
             </modules>
