@@ -9,15 +9,28 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <modules>
-        <module>schema</module>
-        <module>engine</module>
-        <module>service</module>
-        <module>integration-tests</module>
-        <module>documentation</module>
-        <module>webapp</module>
-        <module>deployment</module>
-    </modules>
+    <profiles>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>schema</module>
+                <module>engine</module>
+                <module>service</module>
+                <module>integration-tests</module>
+                <module>deployment</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>docs</id>
+            <modules>
+                <module>documentation</module>
+            </modules>
+        </profile>
+    </profiles>
+
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -261,25 +274,6 @@
                             <goals>
                                 <goal>run</goal>
                             </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>io.swagger</groupId>
-                    <artifactId>swagger-codegen-maven-plugin</artifactId>
-                    <version>2.3.1</version>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>generate</goal>
-                            </goals>
-                            <configuration>
-                                <inputSpec>${project.basedir}/src/main/resources/api.yaml</inputSpec>
-                                <language>java</language>
-                                <configOptions>
-                                    <sourceFolder>src/gen/java/main</sourceFolder>
-                                </configOptions>
-                            </configuration>
                         </execution>
                     </executions>
                 </plugin>
