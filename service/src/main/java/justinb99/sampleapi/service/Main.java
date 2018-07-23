@@ -47,9 +47,16 @@ public class Main {
 
   public static void main(String[] args) throws Exception {
     var server = startServer();
-    logger.info("Jersey app started.  Hit enter to stop it...");
-    System.in.read();
-    server.stop();
+
+    logger.info("Rate server started!");
+
+    Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+      try {
+        server.stop();
+      } catch (Exception e) {
+        throw new RuntimeException(e);
+      }
+    }));
   }
 
 }

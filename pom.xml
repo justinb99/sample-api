@@ -15,6 +15,8 @@
         <module>service</module>
         <module>integration-tests</module>
         <module>documentation</module>
+        <module>webapp</module>
+        <module>deployment</module>
     </modules>
 
     <properties>
