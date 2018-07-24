@@ -31,7 +31,7 @@ function waitForService() {
     do
         curl -s "${URL}/ping" > /dev/null 2>&1
         if [ $? -gt 0 ]; then
-            echo "Ping failed, service unavailable."
+            echo "Ping failed, service unavailable. Will retry..."
             sleep 1
         else
             echo "Service available!"
