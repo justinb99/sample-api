@@ -26,19 +26,9 @@ public class NonApiServletModule extends ServletModule {
 
   @Override
   protected void configureServlets() {
-//    ResourceHandler rh = new ResourceHandler();
-//    ContextHandler ch = new ContextHandler()
-
     serve("/ping").with(new PingServlet());
     serve("/metrics").with(new MetricsServlet(metricRegistry));
     serve("/docs/*").with(StaticServlet.class);
-
-
-//    var defaultServlet = new DefaultServlet();
-//    serve("/static/*").with(defaultServlet);
-//    serve("/*.html").with(defaultServlet);
-//    serve("/javascripts/*").with(defaultServlet);
-//    serve("/stylesheets/*").with(defaultServlet);
   }
 
   @Singleton
