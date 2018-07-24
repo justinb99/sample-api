@@ -7,6 +7,8 @@ import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 import justinb99.sampleapi.schema.RateOuterClass;
 import justinb99.sampleapi.service.Main;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.ToStringExclude;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,10 +17,12 @@ import static io.restassured.RestAssured.given;
 import static justinb99.sampleapi.schema.RateOuterClass.Rate.PRICE_FIELD_NUMBER;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-public class RateIT {
+public class ServiceIT {
 
-  private static final String RATE_URL = "http://localhost:8080/v1/rate";
+  private static final String SERVICE_URL = "http://localhost:8080";
+  private static final String RATE_URL = SERVICE_URL + "/v1/rate";
 
   //2018-07-18 was a Wednesday
   private static final String START = "2018-07-18T07:00:00Z";
@@ -84,6 +88,69 @@ public class RateIT {
     var rate = RateOuterClass.Rate.parseFrom(responseBytes);
     assertEquals(1750, rate.getPrice());
     assertEquals(PRICE_FIELD_NUMBER, rate.getPriceOrStatusCase().getNumber());
+  }
+
+  @Test
+  public void get_documentation() {
+    var docsIndex = given()
+      .get(SERVICE_URL + "/docs/index.html?some=garbage")
+      .then()
+      .statusCode(200)
+      .extract()
+      .body()
+      .asString();
+
+    assertTrue(docsIndex.contains("parking rate"));
+  }
+
+  @Test
+  public void get_documentation_js() {
+    var docsIndex = given()
+      .get(SERVICE_URL + "/docs/javascripts/spectacle.js")
+      .then()
+      .statusCode(200)
+      .extract()
+      .body()
+      .asString();
+
+    assertTrue(docsIndex.contains("Traverse"));
+  }
+
+  @Test
+  public void get_documentation_404() {
+    given()
+      .get(SERVICE_URL + "/docs/doesnotexist.html")
+      .then()
+      .statusCode(404);
+  }
+
+  @Test
+  public void get_ping() {
+    var pong = given()
+      .get(SERVICE_URL + "/ping")
+      .then()
+      .contentType("text/plain;charset=iso-8859-1")
+      .statusCode(200)
+      .extract()
+      .body()
+      .asString();
+
+    assertEquals("pong\n", pong);
+  }
+
+  @Test
+  public void get_metrics() {
+    var metrics = given()
+      .get(SERVICE_URL + "/metrics")
+      .then()
+      .contentType("application/json")
+      .statusCode(200)
+      .extract()
+      .body()
+      .asString();
+
+    var numberOfEndpointsTimed = StringUtils.countMatches(metrics, "RateResource.getRate");
+    assertEquals(4, numberOfEndpointsTimed);
   }
 
   private void getJsonRate(String url) {
