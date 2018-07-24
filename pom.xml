@@ -9,28 +9,14 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <profiles>
-        <profile>
-            <id>default</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <modules>
-                <module>schema</module>
-                <module>engine</module>
-                <module>service</module>
-                <module>integration-tests</module>
-                <module>deployment</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>documentation</id>
-            <modules>
-                <module>documentation</module>
-            </modules>
-        </profile>
-    </profiles>
-
+    <modules>
+        <module>documentation</module>
+        <module>schema</module>
+        <module>engine</module>
+        <module>service</module>
+        <module>integration-tests</module>
+        <module>deployment</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -45,6 +31,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>justinb99.sampleapi</groupId>
+                <artifactId>documentation</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>justinb99.sampleapi</groupId>
                 <artifactId>schema</artifactId>

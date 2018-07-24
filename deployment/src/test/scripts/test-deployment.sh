@@ -27,7 +27,7 @@ function GET_Rate() {
 function waitForService() {
     started=0
 
-    for i in `seq 1 10`;
+    for i in `seq 1 15`;
     do
         curl -s "${URL}/ping" > /dev/null 2>&1
         if [ $? -gt 0 ]; then
@@ -41,7 +41,7 @@ function waitForService() {
     done
 
     if [ ${started} -eq 0 ]; then
-        echo "Service failed to initialize in 10 seconds. Exiting..."
+        echo "Service failed to initialize. Exiting..."
         exit 1
     fi
 }

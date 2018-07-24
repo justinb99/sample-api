@@ -14,6 +14,10 @@
     <dependencies>
         <dependency>
             <groupId>justinb99.sampleapi</groupId>
+            <artifactId>documentation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>justinb99.sampleapi</groupId>
             <artifactId>engine</artifactId>
         </dependency>
         <dependency>
@@ -79,6 +83,16 @@
         <dependency>
             <groupId>io.dropwizard.metrics</groupId>
             <artifactId>metrics-servlets</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

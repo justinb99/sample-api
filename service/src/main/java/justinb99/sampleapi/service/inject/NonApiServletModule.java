@@ -31,7 +31,7 @@ public class NonApiServletModule extends ServletModule {
 
     serve("/ping").with(new PingServlet());
     serve("/metrics").with(new MetricsServlet(metricRegistry));
-    serve("/static/*").with(StaticServlet.class);
+    serve("/docs/*").with(StaticServlet.class);
 
 
 //    var defaultServlet = new DefaultServlet();
@@ -46,7 +46,7 @@ public class NonApiServletModule extends ServletModule {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      String resource = "/static" + request.getPathInfo();
+      String resource = "/docs" + request.getPathInfo();
       logger.info("Getting resource {}", resource);
       var resourceStream = getClass().getResourceAsStream(resource);
       if (resourceStream != null) {
