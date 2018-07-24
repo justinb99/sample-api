@@ -10,7 +10,6 @@ import com.google.inject.Provider;
 import com.google.inject.servlet.ServletModule;
 import io.logz.guice.jersey.JerseyServer;
 import io.logz.guice.jersey.configuration.JerseyConfiguration;
-import justinb99.sampleapi.service.MyMetricServletContextListener;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.slf4j.LoggerFactory;
@@ -23,7 +22,6 @@ public class ServiceModule extends AbstractModule {
   @Override
   protected void configure() {
     var theMetricRegistry = new MetricRegistry();
-    LoggerFactory.getLogger(getClass()).info("\n\n\ntheMetricRegistry={}", System.identityHashCode(theMetricRegistry));
     bind(MetricRegistry.class).toInstance(theMetricRegistry);
 
     var resourceConfig = buildResourceConfig(theMetricRegistry);
@@ -69,7 +67,6 @@ public class ServiceModule extends AbstractModule {
     return JerseyConfiguration.builder()
       .addPackage("justinb99.sampleapi.service.resource")
       .addPort(port)
-      .registerClasses(MyMetricServletContextListener.class)
       .registerClasses(ObjectMapperProvider.class)
       .registerClasses(JacksonFeature.class)
       .withResourceConfig(resourceConfig)
