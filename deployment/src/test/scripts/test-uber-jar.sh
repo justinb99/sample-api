@@ -8,7 +8,7 @@ TIMESPAN="start=2015-07-01T07%3A00%3A00Z&end=2015-07-01T12%3A00%3A00Z"
 
 function GET() {
     echo "GET ${1}"
-    curl -s -f "${URL}${1}?${TIMESPAN}"
+    curl -s -f "${URL}${1}"
 
     if [ $? -gt 0 ]; then
         echo "FAILED"
@@ -19,22 +19,52 @@ function GET() {
     echo ""
 }
 
+function GET_Rate() {
+    GET "${1}?${TIMESPAN}"
+}
+
+# Utilizes the Metrics PingServlet to detect when the service is up
+function waitForService() {
+    started=0
+
+    for i in `seq 1 5`;
+    do
+        curl -s "${URL}/ping" > /dev/null 2>&1
+        if [ $? -gt 0 ]; then
+            echo "Ping failed, service unavailable."
+            sleep 1
+        else
+            echo "Service available!"
+            started=1
+            break
+        fi
+    done
+
+    if [ ${started} -eq 0 ]; then
+        echo "Service failed to initialize in 5 seconds. Exiting..."
+        exit 1
+    fi
+}
+
 java -Dport=${PORT} -jar target/sample-api.jar > logs/test-uber-jar.log 2>&1 &
 SERVER_PID=$!
 
 echo "Server started on Port ${PORT} with PID ${SERVER_PID}"
 
-echo "Waiting 5s for server to initialize..."
-sleep 5
+echo "Waiting for server to initialize..."
+waitForService
+
 echo ""
 
-GET "/v1/rate"
-GET "/v1/rate.json"
-GET "/v1/rate.xml"
-GET "/v1/rate.proto"
+GET_Rate "/v1/rate"
+GET_Rate "/v1/rate.json"
+GET_Rate "/v1/rate.xml"
+GET_Rate "/v1/rate.proto"
+
+GET "/metrics"
 
 echo "Stopping server..."
-kill $SERVER_PID
+kill ${SERVER_PID}
 
 echo "Last 5 lines of log file:"
 tail -n 5 logs/test-uber-jar.log

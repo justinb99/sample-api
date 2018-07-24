@@ -1,5 +1,6 @@
 package justinb99.sampleapi.service.resource.v1;
 
+import com.codahale.metrics.annotation.Timed;
 import justinb99.sampleapi.engine.service.RateEngine;
 import justinb99.sampleapi.engine.xml.XmlSerializer;
 import justinb99.sampleapi.schema.RateOuterClass.Rate;
@@ -33,6 +34,7 @@ public class RateResource {
   @Path("rate")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
+  @Timed
   public Rate getRate(@QueryParam(START) String start, @QueryParam(END) String end) {
     return getRateJson(start, end);
   }
@@ -40,13 +42,14 @@ public class RateResource {
   @Path("rate.json")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
+  @Timed
   public Rate getRateJson(@QueryParam(START) String start, @QueryParam(END) String end) {
     return rateEngine.getRate(start, end);
   }
 
   @Path("rate.xml")
   @GET
-//  @Produces(MediaType.APPLICATION_XML)
+  @Timed
   public Response getRateXml(@QueryParam(START) String start, @QueryParam(END) String end) {
     var rate = rateEngine.getRate(start, end);
     return Response
@@ -54,13 +57,12 @@ public class RateResource {
       .type(MediaType.APPLICATION_XML)
       .entity(xmlSerializer.toXmlString(rate))
       .build();
-      //"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><rate><price>1750</price></rate>")
-//    return XmlRate.of(rateEngine.getRate(start, end));
   }
 
   @Path("rate.proto")
   @GET
   @Produces(MediaType.APPLICATION_OCTET_STREAM)
+  @Timed
   public byte[] getRateProtoBinary(@QueryParam(START) String start, @QueryParam(END) String end) {
     return rateEngine.getRate(start, end).toByteArray();
   }

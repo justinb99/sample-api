@@ -40,6 +40,7 @@
         <JACKSON_VERSION>2.9.6</JACKSON_VERSION>
         <RXJAVA_VERSION>2.1.14</RXJAVA_VERSION>
         <JERSEY_VERSION>2.27</JERSEY_VERSION>
+        <METRICS_VERSION>4.0.0</METRICS_VERSION>
     </properties>
 
     <dependencyManagement>
@@ -216,7 +217,17 @@
             <dependency>
                 <groupId>io.dropwizard.metrics</groupId>
                 <artifactId>metrics-core</artifactId>
-                <version>4.0.0</version>
+                <version>${METRICS_VERSION}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.dropwizard.metrics</groupId>
+                <artifactId>metrics-jersey2</artifactId>
+                <version>${METRICS_VERSION}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.dropwizard.metrics</groupId>
+                <artifactId>metrics-servlets</artifactId>
+                <version>${METRICS_VERSION}</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
