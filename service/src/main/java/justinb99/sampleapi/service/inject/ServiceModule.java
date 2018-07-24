@@ -2,17 +2,12 @@ package justinb99.sampleapi.service.inject;
 
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.jersey2.InstrumentedResourceMethodApplicationListener;
-import com.codahale.metrics.servlets.MetricsServlet;
-import com.codahale.metrics.servlets.PingServlet;
 import com.google.inject.AbstractModule;
 import com.google.inject.Injector;
-import com.google.inject.Provider;
-import com.google.inject.servlet.ServletModule;
 import io.logz.guice.jersey.JerseyServer;
 import io.logz.guice.jersey.configuration.JerseyConfiguration;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Constructor;
 import java.util.function.Supplier;
@@ -24,37 +19,14 @@ public class ServiceModule extends AbstractModule {
     var theMetricRegistry = new MetricRegistry();
     bind(MetricRegistry.class).toInstance(theMetricRegistry);
 
+    install(new NonApiServletModule(theMetricRegistry));
+
     var resourceConfig = buildResourceConfig(theMetricRegistry);
-    JerseyConfiguration configuration = buildConfiguration(resourceConfig);
+    var jerseyConfiguration = buildConfiguration(resourceConfig);
+    bind(JerseyConfiguration.class).toInstance(jerseyConfiguration);
 
-//    install(new JerseyModule(configuration));
-    Provider<Injector> injectorProvider = getProvider(Injector.class);
-
-    install(new ServletModule() {
-      @Override
-      protected void configureServlets() {
-        serve("/ping").with(new PingServlet());
-        serve("/metrics").with(new MetricsServlet(theMetricRegistry));
-      }
-    });
-
-    Constructor<JerseyServer> constructor = null;
-    try {
-      constructor = JerseyServer.class.getDeclaredConstructor(JerseyConfiguration.class, Supplier.class);
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    }
-    constructor.setAccessible(true);
-    Supplier<Injector> injectorSupplier = injectorProvider::get;
-    JerseyServer jerseyServer = null;
-    try {
-      jerseyServer = constructor.newInstance(configuration, injectorSupplier);
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
-
+    var jerseyServer = constructJerseyServer(jerseyConfiguration);
     bind(JerseyServer.class).toInstance(jerseyServer);
-    bind(JerseyConfiguration.class).toInstance(configuration);
   }
 
   ResourceConfig buildResourceConfig(MetricRegistry metricRegistry) {
@@ -71,6 +43,25 @@ public class ServiceModule extends AbstractModule {
       .registerClasses(JacksonFeature.class)
       .withResourceConfig(resourceConfig)
       .build();
+  }
+
+  JerseyServer constructJerseyServer(JerseyConfiguration jerseyConfiguration) {
+    var injectorProvider = getProvider(Injector.class);
+    Supplier<Injector> injectorSupplier = injectorProvider::get;
+
+    Constructor<JerseyServer> constructor;
+    JerseyServer jerseyServer;
+
+    try {
+      constructor = JerseyServer.class.
+        getDeclaredConstructor(JerseyConfiguration.class, Supplier.class);
+      constructor.setAccessible(true);
+      jerseyServer = constructor.newInstance(jerseyConfiguration, injectorSupplier);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+
+    return jerseyServer;
   }
 
 }
