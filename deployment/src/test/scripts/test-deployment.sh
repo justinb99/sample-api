@@ -72,7 +72,7 @@ function waitForService() {
     fi
 }
 
-java -Dport=${PORT} -jar target/sample-api.jar > logs/test-uber-jar.log 2>&1 &
+java -Dport=${PORT} -jar target/sample-api.jar > logs/test-deployment.log 2>&1 &
 SERVER_PID=$!
 
 echo "Server started on Port ${PORT} with PID ${SERVER_PID}"
@@ -98,7 +98,7 @@ echo "Stopping server..."
 kill ${SERVER_PID}
 
 echo "Last 5 lines of log file:"
-tail -n 5 logs/test-uber-jar.log
+tail -n 5 logs/test-deployment.log
 
 echo ""
 echo "Exiting with ${EXIT_CODE}"

@@ -3,6 +3,7 @@ package justinb99.sampleapi.engine.model;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
+import java.util.Optional;
 
 public class DateTimeRange {
 
@@ -25,8 +26,10 @@ public class DateTimeRange {
     this.start = start;
   }
 
-  public LocalTime getStartTime() {
-    return start.toLocalTime();
+  public Optional<LocalTime> getStartTime() {
+    if (endBeforeStart())
+      return Optional.empty();
+    return Optional.of(start.toLocalTime());
   }
 
   public OffsetDateTime getEnd() {
@@ -37,8 +40,14 @@ public class DateTimeRange {
     this.end = end;
   }
 
-  public LocalTime getEndTime() {
-    return end.toLocalTime();
+  public Optional<LocalTime> getEndTime() {
+    if (endBeforeStart())
+      return Optional.empty();
+    return Optional.of(end.toLocalTime());
+  }
+
+  private boolean endBeforeStart() {
+    return end.compareTo(start) < 0;
   }
 
   /**

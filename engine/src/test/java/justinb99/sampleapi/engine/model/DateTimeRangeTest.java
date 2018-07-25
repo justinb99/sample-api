@@ -28,12 +28,12 @@ public class DateTimeRangeTest {
 
   @Test
   public void getStartTime() {
-    assertEquals(LocalTime.of(10, 11, 12), target.getStartTime());
+    assertEquals(LocalTime.of(10, 11, 12), target.getStartTime().get());
   }
 
   @Test
   public void getEndTime() {
-    assertEquals(LocalTime.of(14, 15, 16), target.getEndTime());
+    assertEquals(LocalTime.of(14, 15, 16), target.getEndTime().get());
   }
 
   @Test

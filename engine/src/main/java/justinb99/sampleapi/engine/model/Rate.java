@@ -58,8 +58,14 @@ public class Rate {
   public boolean isAvailable(DateTimeRange dateTimeRange) {
     return Optional.of(dateTimeRange.getDayOfWeek())
       .filter(days::contains)
-      .filter(dow -> dateTimeRange.getStartTime().compareTo(startTime) >= 0)
-      .filter(dow -> dateTimeRange.getEndTime().compareTo(endTime) <= 0)
+      .filter(dow ->
+        dateTimeRange.getStartTime()
+          .map(st -> st.compareTo(startTime) >= 0)
+          .orElse(false))
+      .filter(dow ->
+        dateTimeRange.getEndTime()
+          .map(end -> end.compareTo(endTime) <= 0)
+          .orElse(false))
       .isPresent();
   }
 

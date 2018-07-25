@@ -39,8 +39,8 @@ public class RateTest {
 
   @Test
   public void isAvailable_for_days() {
-    when(dateTimeRange.getStartTime()).thenReturn(START_TIME.plusHours(1));
-    when(dateTimeRange.getEndTime()).thenReturn(END_TIME.minusHours(1));
+    when(dateTimeRange.getStartTime()).thenReturn(Optional.of(START_TIME.plusHours(1)));
+    when(dateTimeRange.getEndTime()).thenReturn(Optional.of(END_TIME.minusHours(1)));
 
     assertFalse(rangeIsAvailableForDays(Collections.emptySet()));
     assertTrue(rangeIsAvailableForDays(Set.of(MONDAY)));
@@ -55,20 +55,20 @@ public class RateTest {
 
   @Test
   public void isAvailable_at_time_bounds() {
-    when(dateTimeRange.getStartTime()).thenReturn(START_TIME);
-    when(dateTimeRange.getEndTime()).thenReturn(END_TIME);
+    when(dateTimeRange.getStartTime()).thenReturn(Optional.of(START_TIME));
+    when(dateTimeRange.getEndTime()).thenReturn(Optional.of(END_TIME));
 
     assertTrue(rangeIsAvailableForDays(Set.of(MONDAY)));
   }
 
   @Test
   public void isAvailable_just_before_or_just_after() {
-    when(dateTimeRange.getStartTime()).thenReturn(START_TIME.minusNanos(1L));
-    when(dateTimeRange.getEndTime()).thenReturn(END_TIME);
+    when(dateTimeRange.getStartTime()).thenReturn(Optional.of(START_TIME.minusNanos(1L)));
+    when(dateTimeRange.getEndTime()).thenReturn(Optional.of(END_TIME));
     assertFalse(rangeIsAvailableForDays(Set.of(MONDAY)));
 
-    when(dateTimeRange.getStartTime()).thenReturn(START_TIME);
-    when(dateTimeRange.getEndTime()).thenReturn(END_TIME.plusNanos(1L));
+    when(dateTimeRange.getStartTime()).thenReturn(Optional.of(START_TIME));
+    when(dateTimeRange.getEndTime()).thenReturn(Optional.of(END_TIME.plusNanos(1L)));
     assertFalse(rangeIsAvailableForDays(Set.of(MONDAY)));
   }
 
@@ -77,21 +77,21 @@ public class RateTest {
     target.setStartTime(END_TIME);
     target.setEndTime(START_TIME);
 
-    when(dateTimeRange.getStartTime()).thenReturn(NOON);
+    when(dateTimeRange.getStartTime()).thenReturn(Optional.of(NOON));
     assertFalse(rangeIsAvailableForDays(Set.of(MONDAY)));
 
-    when(dateTimeRange.getStartTime()).thenReturn(END_TIME);
-    when(dateTimeRange.getEndTime()).thenReturn(END_TIME);
+    when(dateTimeRange.getStartTime()).thenReturn(Optional.of(END_TIME));
+    when(dateTimeRange.getEndTime()).thenReturn(Optional.of(END_TIME));
     assertFalse(rangeIsAvailableForDays(Set.of(MONDAY)));
 
-    when(dateTimeRange.getStartTime()).thenReturn(START_TIME);
+    when(dateTimeRange.getStartTime()).thenReturn(Optional.of(START_TIME));
     assertFalse(rangeIsAvailableForDays(Set.of(MONDAY)));
   }
 
   @Test
   public void isAvailable_range_at_same_time() {
-    when(dateTimeRange.getStartTime()).thenReturn(NOON);
-    when(dateTimeRange.getEndTime()).thenReturn(NOON);
+    when(dateTimeRange.getStartTime()).thenReturn(Optional.of(NOON));
+    when(dateTimeRange.getEndTime()).thenReturn(Optional.of(NOON));
 
     assertTrue(rangeIsAvailableForDays(Set.of(MONDAY)));
   }
@@ -101,8 +101,8 @@ public class RateTest {
     target.setStartTime(START_TIME);
     target.setEndTime(START_TIME);
 
-    when(dateTimeRange.getStartTime()).thenReturn(START_TIME);
-    when(dateTimeRange.getEndTime()).thenReturn(START_TIME);
+    when(dateTimeRange.getStartTime()).thenReturn(Optional.of(START_TIME));
+    when(dateTimeRange.getEndTime()).thenReturn(Optional.of(START_TIME));
 
     assertTrue(rangeIsAvailableForDays(Set.of(MONDAY)));
   }
