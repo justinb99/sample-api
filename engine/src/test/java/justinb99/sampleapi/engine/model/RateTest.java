@@ -34,7 +34,7 @@ public class RateTest {
     target.setStartTime(START_TIME);
     target.setEndTime(END_TIME);
 
-    when(dateTimeRange.getDayOfWeek()).thenReturn(MONDAY);
+    when(dateTimeRange.getDayOfWeek()).thenReturn(Optional.of(MONDAY));
   }
 
   @Test

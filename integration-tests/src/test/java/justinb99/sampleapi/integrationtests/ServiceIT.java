@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.logz.guice.jersey.JerseyServer;
 import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
+import justinb99.sampleapi.engine.date.ISO8601DateParser;
 import justinb99.sampleapi.schema.RateOuterClass;
 import justinb99.sampleapi.service.Main;
 import org.apache.commons.lang3.StringUtils;
@@ -54,6 +55,12 @@ public class ServiceIT {
   }
 
   @Test
+  public void get_rate_available_same_start_end() {
+    assertAvailableJsonRate(getRate(RATE_URL, START, START));
+    assertAvailableJsonRate(getRate(RATE_URL, END, END));
+  }
+
+  @Test
   public void get_rate_unavailable() {
     getJsonRateUnavailable(RATE_URL);
   }
@@ -70,9 +77,30 @@ public class ServiceIT {
     assertJsonRateUnavailable(END, START);
   }
 
+  @Test
+  public void get_rate_unavailable_multiple_days() {
+    assertJsonRateUnavailable(END, START_UNAVAILABLE);
+  }
+
   private void assertJsonRateUnavailable(String start, String end) {
     var validatableResponse = getRate(RATE_URL, start, end);
     assertJsonRateUnavailable(validatableResponse);
+  }
+
+  @Test
+  public void get_rate_different_timezone() {
+    //Tuesday @ 2:00:59.999 UTC
+    var start = "2018-07-24T04:59:59.999+02:59";
+    //Tuesday @ 6:23:00.123 UTC
+    var end = "2018-07-24T05:00:00.123-0123";
+    var validatableResponse = getRate(RATE_URL, start, end);
+    assertAvailableJsonRate(validatableResponse, 925);
+  }
+
+  @Test
+  public void get_rate_unavailable_bad_times() {
+    assertJsonRateUnavailable(getRate(RATE_URL, START, "2018-7-18T1200"));
+    assertJsonRateUnavailable(getRate(RATE_URL, "2018-7-18T700", END));
   }
 
   @Test
@@ -195,13 +223,24 @@ public class ServiceIT {
   }
 
   private void getJsonRate(String url) {
-    var response = getRate(url)
+    assertAvailableJsonRate(getRate(url));
+  }
+
+  private void assertAvailableJsonRate(ValidatableResponse validatableResponse) {
+    assertAvailableJsonRate(validatableResponse, EXPECTED_PRICE);
+  }
+
+  private void assertAvailableJsonRate(
+    ValidatableResponse validatableResponse,
+    Integer expectedPrice
+  ) {
+    var response = validatableResponse
       .contentType(ContentType.JSON)
       .extract()
       .as(ObjectNode.class);
 
     var expected = createObjectNode();
-    expected.put("price", EXPECTED_PRICE);
+    expected.put("price", expectedPrice);
 
     assertEquals(expected, response);
   }

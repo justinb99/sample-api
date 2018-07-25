@@ -38,7 +38,7 @@ public class DateTimeRangeTest {
 
   @Test
   public void getDayOfWeek() {
-    assertEquals(SATURDAY, target.getDayOfWeek());
+    assertEquals(SATURDAY, target.getDayOfWeek().get());
   }
 
 

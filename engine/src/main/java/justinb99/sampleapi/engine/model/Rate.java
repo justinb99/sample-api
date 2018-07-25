@@ -56,7 +56,7 @@ public class Rate {
   //assumes start and end are both UTC
   //TODO: dateTimeRange must be valid--on same day and endTime >= startTime
   public boolean isAvailable(DateTimeRange dateTimeRange) {
-    return Optional.of(dateTimeRange.getDayOfWeek())
+    return dateTimeRange.getDayOfWeek()
       .filter(days::contains)
       .filter(dow ->
         dateTimeRange.getStartTime()
