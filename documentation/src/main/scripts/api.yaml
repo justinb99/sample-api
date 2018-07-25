@@ -7,14 +7,38 @@ info:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
 host: "localhost:8080"
-basePath: "/v1"
+basePath: "/"
 tags:
+- name: "metrics"
+  description: "Report of cumulative performance metrics for 'rate' API endpoints"
+- name: "ping"
+  description: "Status-check endpoint to verify service is available"
 - name: "rate"
   description: "Parking rate for a time span"
 schemes:
 - "http"
 paths:
-  /rate:
+  /metrics:
+    get:
+      tags:
+      - "metrics"
+      operationId: "getMetrics"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Responds with detailed performance metrics per 'rate' API endpoint."
+  /ping:
+    get:
+      tags:
+      - "ping"
+      operationId: "getPing"
+      produces:
+      - "text/plain;charset=iso-8859-1"
+      responses:
+        200:
+          description: "Responds with 'pong\\n' when service available"
+  /v1/rate:
     get:
       tags:
       - "rate"
@@ -30,7 +54,7 @@ paths:
           description: "Parking Rate"
           schema:
             $ref: "#/definitions/Rate"
-  /rate.json:
+  /v1/rate.json:
     get:
       tags:
       - "rate"
@@ -46,7 +70,7 @@ paths:
           description: "Parking Rate"
           schema:
             $ref: "#/definitions/Rate"
-  /rate.xml:
+  /v1/rate.xml:
     get:
       tags:
       - "rate"
@@ -62,7 +86,7 @@ paths:
           description: "Parking Rate"
           schema:
             $ref: "#/definitions/Rate"
-  /rate.proto:
+  /v1/rate.proto:
     get:
       tags:
       - "rate"
@@ -75,20 +99,7 @@ paths:
       - $ref: '#/components/parameters/endParam'
       responses:
         200:
-          description: >
-            syntax = "proto3";
-
-            package justinb99.sampleapi.schema;
-
-            message Rate {
-                enum Status {
-                    unavailable = 0;
-                }
-                oneof price_or_status {
-                    int32 price = 1;
-                    Status status = 2;
-                }
-            }
+          description: "See 'rate.proto' in justinb99.sampleapi.schema for protobuf schema"
 definitions:
   Rate:
     type: "object"
@@ -109,12 +120,12 @@ components:
     startParam:
       name: "start"
       in: "query"
-      description: "Start of the time span (inclusive)"
+      description: "Start of the time span (inclusive). If 'start' is absent, in an improper format, exceeds 'end', or is on a different date than 'end', the rate will be unavailable.  Regardless of the provided UTC offset, the day of the week will be relative to the time with a UTC offset of 0."
       type: "string"
       format: "date-time"
     endParam:
       name: "end"
       in: "query"
-      description: "End of the time span (inclusive)"
+      description: "End of the time span (inclusive). If 'end' is absent, in an improper format, precedes 'start', or is on a different date than 'start', the rate will be unavailable.  Regardless of the provided UTC offset, the day of the week will be relative to the time with a UTC offset of 0."
       type: "string"
       format: "date-time"
