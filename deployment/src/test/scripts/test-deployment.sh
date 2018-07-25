@@ -23,6 +23,32 @@ function GET_Rate() {
     GET "${1}?${TIMESPAN}"
 }
 
+function GET_Silent() {
+    echo "GET ${1}"
+    curl -s -f "${URL}${1}" > /dev/null 2>&1
+
+    if [ $? -gt 0 ]; then
+        echo "FAILED"
+        EXIT_CODE=$((EXIT_CODE+1))
+    fi
+
+    echo ""
+    echo ""
+}
+
+function GET_404() {
+    echo "GET ${1} should fail"
+    curl -s -f "${URL}${1}"
+
+    if [ $? -eq 0 ]; then
+        echo "FAILED"
+        EXIT_CODE=$((EXIT_CODE+1))
+    fi
+
+    echo ""
+    echo ""
+}
+
 # Utilizes the Metrics PingServlet to detect when the service is up
 function waitForService() {
     started=0
@@ -62,6 +88,11 @@ GET_Rate "/v1/rate.xml"
 GET_Rate "/v1/rate.proto"
 
 GET "/metrics"
+
+GET_Silent "/docs/index.html"
+GET_Silent "/docs/javascripts/spectacle.js"
+
+GET_404 "/rates.json"
 
 echo "Stopping server..."
 kill ${SERVER_PID}
