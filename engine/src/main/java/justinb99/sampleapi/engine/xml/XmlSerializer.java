@@ -20,6 +20,6 @@ public class XmlSerializer {
     } catch (JsonProcessingException e) {
       throw new RuntimeException(e);
     }
-
   }
+
 }

@@ -4,7 +4,6 @@ import justinb99.sampleapi.schema.RateOuterClass;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
-import java.util.Optional;
 import java.util.Set;
 
 public class Rate {
@@ -13,7 +12,6 @@ public class Rate {
   private LocalTime startTime;
   private LocalTime endTime;
   private Integer price;
-  private RateStatus status;
 
   public Rate() {
 

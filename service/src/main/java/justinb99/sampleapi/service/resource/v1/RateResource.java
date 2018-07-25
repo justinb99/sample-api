@@ -1,7 +1,7 @@
 package justinb99.sampleapi.service.resource.v1;
 
 import com.codahale.metrics.annotation.Timed;
-import justinb99.sampleapi.engine.service.RateEngine;
+import justinb99.sampleapi.engine.RateEngine;
 import justinb99.sampleapi.engine.xml.XmlSerializer;
 import justinb99.sampleapi.schema.RateOuterClass.Rate;
 

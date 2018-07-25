@@ -4,14 +4,11 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 
-@Ignore
 public class ISO8601DateParserTest {
 
   private ISO8601DateParser target;
@@ -26,10 +23,9 @@ public class ISO8601DateParserTest {
     var parsed = target.parse("2018-07-19T23:49:08Z");
 
     var expected = OffsetDateTime
-      .of(2018, 7, 19, 23, 49, 8, 0, ZoneOffset.UTC)
-      .toInstant();
+      .of(2018, 7, 19, 23, 49, 8, 0, ZoneOffset.UTC);
 
-    assertEquals(expected, parsed);
+    assertEquals(expected, parsed.get());
   }
 
   @Test
@@ -37,10 +33,9 @@ public class ISO8601DateParserTest {
     var parsed = target.parse("2018-07-19T23:49:08.123Z");
 
     var expected = OffsetDateTime
-      .of(2018, 7, 19, 23, 49, 8, 123000000, ZoneOffset.UTC)
-      .toInstant();
+      .of(2018, 7, 19, 23, 49, 8, 123000000, ZoneOffset.UTC);
 
-    assertEquals(expected, parsed);
+    assertEquals(expected, parsed.get());
   }
 
   @Test
@@ -48,10 +43,9 @@ public class ISO8601DateParserTest {
     var parsed = target.parse("2018-07-19T23:49:08.1Z");
 
     var expected = OffsetDateTime
-      .of(2018, 7, 19, 23, 49, 8, 100000000, ZoneOffset.UTC)
-      .toInstant();
+      .of(2018, 7, 19, 23, 49, 8, 100000000, ZoneOffset.UTC);
 
-    assertEquals(expected, parsed);
+    assertEquals(expected, parsed.get());
   }
 
   @Test
@@ -61,9 +55,9 @@ public class ISO8601DateParserTest {
     var offset = ZoneOffset.ofHoursMinutes(12, 34);
     var expected = OffsetDateTime
       .of(2018, 7, 19, 23, 49, 8, 100000000, offset)
-      .toInstant();
+      .toInstant().atOffset(ZoneOffset.UTC);
 
-    assertEquals(expected, parsed);
+    assertEquals(expected, parsed.get());
   }
 
   @Test
@@ -73,9 +67,9 @@ public class ISO8601DateParserTest {
     var offset = ZoneOffset.ofHoursMinutes(12, 34);
     var expected = OffsetDateTime
       .of(2018, 7, 19, 23, 49, 8, 100000000, offset)
-      .toInstant();
+      .toInstant().atOffset(ZoneOffset.UTC);
 
-    assertEquals(expected, parsed);
+    assertEquals(expected, parsed.get());
   }
 
   @Test
@@ -85,9 +79,9 @@ public class ISO8601DateParserTest {
     var offset = ZoneOffset.ofHoursMinutes(-12, 0);
     var expected = OffsetDateTime
       .of(2018, 7, 19, 23, 49, 8, 100000000, offset)
-      .toInstant();
+      .toInstant().atOffset(ZoneOffset.UTC);
 
-    assertEquals(expected, parsed);
+    assertEquals(expected, parsed.get());
   }
 
   @Ignore //TODO: compact times don't seem to work. Handle errors better
@@ -97,10 +91,9 @@ public class ISO8601DateParserTest {
 
     var offset = ZoneOffset.ofHoursMinutes(-12, 0);
     var expected = OffsetDateTime
-      .of(2018, 7, 19, 23, 49, 8, 100000000, offset)
-      .toInstant();
+      .of(2018, 7, 19, 23, 49, 8, 100000000, offset);
 
-    assertEquals(expected, parsed);
+    assertEquals(expected, parsed.get());
   }
 
 }

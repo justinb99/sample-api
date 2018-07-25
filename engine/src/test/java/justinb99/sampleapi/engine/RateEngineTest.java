@@ -1,12 +1,9 @@
-package justinb99.sampleapi.engine.service;
+package justinb99.sampleapi.engine;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hubspot.jackson.datatype.protobuf.ProtobufModule;
+import justinb99.sampleapi.engine.RateEngine;
 import justinb99.sampleapi.engine.date.ISO8601DateParser;
 import justinb99.sampleapi.engine.model.DateTimeRange;
 import justinb99.sampleapi.engine.model.Rate;
-import justinb99.sampleapi.schema.RateOuterClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
