@@ -104,6 +104,39 @@ public class ServiceIT {
   }
 
   @Test
+  public void get_rate_no_time_span() {
+      given()
+        .log().ifValidationFails()
+        .get(RATE_URL)
+        .then()
+        .log().ifValidationFails()
+        .statusCode(200)
+        .body("status", equalTo("unavailable"));
+  }
+
+  @Test
+  public void get_rate_just_start() {
+    given()
+      .log().ifValidationFails()
+      .get(RATE_URL + "?start={start}", START)
+      .then()
+      .log().ifValidationFails()
+      .statusCode(200)
+      .body("status", equalTo("unavailable"));
+  }
+
+  @Test
+  public void get_rate_just_end() {
+    given()
+      .log().ifValidationFails()
+      .get(RATE_URL + "?end={end}", END)
+      .then()
+      .log().ifValidationFails()
+      .statusCode(200)
+      .body("status", equalTo("unavailable"));
+  }
+
+  @Test
   public void get_rate_json() {
     getJsonRate(RATE_URL + ".json");
   }
