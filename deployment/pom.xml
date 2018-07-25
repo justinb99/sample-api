@@ -53,6 +53,7 @@
     <profiles>
         <profile>
             <id>default</id>
+            <!-- Skip running the tests if on Windows, since the tests are UNIX based -->
             <activation>
                 <os>
                     <family>!windows</family>
