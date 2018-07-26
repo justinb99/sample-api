@@ -13,6 +13,11 @@ import org.glassfish.jersey.server.ResourceConfig;
 import java.lang.reflect.Constructor;
 import java.util.function.Supplier;
 
+/**
+ * This module is based on io.logz.guice.jersey.JerseyModule, however I needed
+ * control over the ServletModule (via derived NonApiServletModule) the
+ * JerseyModule created.  Thus I extracted and expanded on JerseyModule.
+ */
 public class ServiceModule extends AbstractModule {
 
   @Override

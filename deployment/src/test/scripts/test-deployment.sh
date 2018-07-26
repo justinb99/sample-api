@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# For relative paths, this script assumes it is executed out of the root of the deployment module
+
 EXIT_CODE=0
 # Test with an alternative port
 PORT=9000
@@ -72,6 +74,7 @@ function waitForService() {
     fi
 }
 
+mkdir -p logs
 java -Dport=${PORT} -jar target/sample-api.jar > logs/test-deployment.log 2>&1 &
 SERVER_PID=$!
 
