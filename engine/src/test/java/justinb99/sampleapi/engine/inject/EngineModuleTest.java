@@ -1,4 +1,4 @@
-package justinb99.sampleapi.engine.module;
+package justinb99.sampleapi.engine.inject;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
@@ -16,7 +16,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.MessageFormat;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.instanceOf;

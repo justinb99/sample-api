@@ -6,6 +6,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Injector;
 import io.logz.guice.jersey.JerseyServer;
 import io.logz.guice.jersey.configuration.JerseyConfiguration;
+import justinb99.sampleapi.engine.util.SystemPropertyProvider;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
@@ -22,7 +23,7 @@ public class ServiceModule extends AbstractModule {
     install(new NonApiServletModule(theMetricRegistry));
 
     var resourceConfig = buildResourceConfig(theMetricRegistry);
-    var jerseyConfiguration = buildConfiguration(resourceConfig);
+    var jerseyConfiguration = buildConfiguration(new SystemPropertyProvider(), resourceConfig);
     bind(JerseyConfiguration.class).toInstance(jerseyConfiguration);
 
     var jerseyServer = constructJerseyServer(jerseyConfiguration);
@@ -34,8 +35,8 @@ public class ServiceModule extends AbstractModule {
       .register(new InstrumentedResourceMethodApplicationListener(metricRegistry));
   }
 
-  JerseyConfiguration buildConfiguration(ResourceConfig resourceConfig) {
-    int port = Integer.valueOf(System.getProperty("port", "8080"));
+  JerseyConfiguration buildConfiguration(SystemPropertyProvider systemPropertyProvider, ResourceConfig resourceConfig) {
+    int port = Integer.valueOf(systemPropertyProvider.getProperty("port", "8080"));
     return JerseyConfiguration.builder()
       .addPackage("justinb99.sampleapi.service.resource")
       .addPort(port)
@@ -45,7 +46,7 @@ public class ServiceModule extends AbstractModule {
       .build();
   }
 
-  JerseyServer constructJerseyServer(JerseyConfiguration jerseyConfiguration) {
+  private JerseyServer constructJerseyServer(JerseyConfiguration jerseyConfiguration) {
     var injectorProvider = getProvider(Injector.class);
     Supplier<Injector> injectorSupplier = injectorProvider::get;
 

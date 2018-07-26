@@ -3,7 +3,7 @@ package justinb99.sampleapi.service;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import io.logz.guice.jersey.JerseyServer;
-import justinb99.sampleapi.engine.module.EngineModule;
+import justinb99.sampleapi.engine.inject.EngineModule;
 import justinb99.sampleapi.service.inject.ServiceModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

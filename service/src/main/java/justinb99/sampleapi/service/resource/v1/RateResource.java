@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import justinb99.sampleapi.engine.RateEngine;
 import justinb99.sampleapi.engine.xml.XmlSerializer;
 import justinb99.sampleapi.schema.RateOuterClass.Rate;
+import org.eclipse.jetty.http.HttpStatus;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -53,8 +54,8 @@ public class RateResource {
   public Response getRateXml(@QueryParam(START) String start, @QueryParam(END) String end) {
     var rate = rateEngine.getRate(start, end);
     return Response
-      .status(200)
-      .type(MediaType.APPLICATION_XML)
+      .status(HttpStatus.OK_200)
+      .type(MediaType.APPLICATION_XML_TYPE)
       .entity(xmlSerializer.toXmlString(rate))
       .build();
   }

@@ -1,6 +1,5 @@
-package justinb99.sampleapi.service.servlet;
+package justinb99.sampleapi.engine.util;
 
-import justinb99.sampleapi.engine.util.ResourceProvider;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
