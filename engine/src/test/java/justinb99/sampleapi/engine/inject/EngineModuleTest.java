@@ -48,8 +48,6 @@ public class EngineModuleTest {
     unavailableRate = RateOuterClass.Rate.newBuilder()
       .setStatus(RateOuterClass.Rate.Status.unavailable)
       .build();
-
-
   }
 
   @Test

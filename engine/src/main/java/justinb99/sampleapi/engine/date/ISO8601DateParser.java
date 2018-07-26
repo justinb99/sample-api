@@ -28,7 +28,7 @@ public class ISO8601DateParser {
 
   private DateFormat dateFormat = new StdDateFormat();
 
-  public Optional<OffsetDateTime> parse(String input) {
+  Optional<OffsetDateTime> parse(String input) {
     return Optional.ofNullable(input)
       .flatMap(inpt -> {
         try {

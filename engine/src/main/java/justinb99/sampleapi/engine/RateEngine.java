@@ -4,7 +4,6 @@ import justinb99.sampleapi.engine.date.ISO8601DateParser;
 import justinb99.sampleapi.engine.model.DateTimeRange;
 import justinb99.sampleapi.engine.model.Rate;
 import justinb99.sampleapi.schema.RateOuterClass;
-import org.apache.commons.lang3.tuple.Pair;
 
 import javax.inject.Inject;
 import java.util.List;

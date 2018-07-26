@@ -36,7 +36,6 @@ public class RateConfig {
     this.price = price;
   }
 
-  //TODO test remainder
   public Rate asRate() {
     var rate = new Rate();
 

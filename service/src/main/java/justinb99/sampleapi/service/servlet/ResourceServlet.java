@@ -4,7 +4,6 @@ import justinb99.sampleapi.engine.util.ResourceProvider;
 import justinb99.sampleapi.engine.util.StreamCopier;
 import org.eclipse.jetty.http.HttpStatus;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,11 +43,10 @@ public class ResourceServlet extends HttpServlet {
    *
    * @param request Incoming request
    * @param response Outgoing response
-   * @throws ServletException not thrown
    * @throws IOException on error copying the resource InputStream to the response OutputStream
    */
   @Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     var resource = resourcePath + request.getPathInfo();
     var resourceStream = resourceProvider.getResourceAsStream(resource);
     if (resourceStream != null) {

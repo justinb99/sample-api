@@ -1,6 +1,5 @@
 package justinb99.sampleapi.engine.xml;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import justinb99.sampleapi.schema.RateOuterClass;

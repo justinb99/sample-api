@@ -26,7 +26,7 @@ public class DateTimeRange {
     this.start = start;
   }
 
-  public Optional<LocalTime> getStartTime() {
+  Optional<LocalTime> getStartTime() {
     if (endBeforeStart())
       return Optional.empty();
     return Optional.of(start.toLocalTime());
@@ -40,7 +40,7 @@ public class DateTimeRange {
     this.end = end;
   }
 
-  public Optional<LocalTime> getEndTime() {
+  Optional<LocalTime> getEndTime() {
     if (endBeforeStart())
       return Optional.empty();
     return Optional.of(end.toLocalTime());
@@ -60,7 +60,7 @@ public class DateTimeRange {
    *
    * @return DayOfWeek if the DateTimeRange is valid, else empty
    */
-  public Optional<DayOfWeek> getDayOfWeek() {
+  Optional<DayOfWeek> getDayOfWeek() {
     if (start.toLocalDate().equals(end.toLocalDate()))
       return Optional.of(start.getDayOfWeek());
     else

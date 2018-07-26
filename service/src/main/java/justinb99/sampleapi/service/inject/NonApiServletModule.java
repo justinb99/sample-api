@@ -5,8 +5,8 @@ import com.codahale.metrics.servlets.MetricsServlet;
 import com.codahale.metrics.servlets.PingServlet;
 import com.google.inject.servlet.ServletModule;
 import justinb99.sampleapi.engine.util.ResourceProvider;
-import justinb99.sampleapi.service.servlet.ResourceServlet;
 import justinb99.sampleapi.engine.util.StreamCopier;
+import justinb99.sampleapi.service.servlet.ResourceServlet;
 
 public class NonApiServletModule extends ServletModule {
 

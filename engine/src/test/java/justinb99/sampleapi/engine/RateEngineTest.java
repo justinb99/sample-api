@@ -15,15 +15,10 @@ import java.util.List;
 import java.util.Optional;
 
 import static justinb99.sampleapi.schema.RateOuterClass.Rate.STATUS_FIELD_NUMBER;
-import static justinb99.sampleapi.schema.RateOuterClass.Rate.Status.unavailable;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.same;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RateEngineTest {
@@ -146,8 +141,5 @@ public class RateEngineTest {
     verify(dateParser).parseRange(start, end);
     verify(rate1_isAvailable, never()).isAvailable(any());
   }
-
-
-
 
 }
