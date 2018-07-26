@@ -9,6 +9,7 @@ import java.time.ZoneOffset;
 
 import static java.time.DayOfWeek.SATURDAY;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class DateTimeRangeTest {
 
@@ -41,5 +42,20 @@ public class DateTimeRangeTest {
     assertEquals(SATURDAY, target.getDayOfWeek().get());
   }
 
+  @Test
+  public void get_times_inverted() {
+    target = new DateTimeRange(END, START);
+    assertFalse(target.getStartTime().isPresent());
+    assertFalse(target.getEndTime().isPresent());
+    assertEquals(SATURDAY, target.getDayOfWeek().get());
+  }
+
+  @Test
+  public void getDayOfWeek_not_same_day() {
+    target = new DateTimeRange(START, END.plusHours(24L));
+    assertEquals(LocalTime.of(10, 11, 12), target.getStartTime().get());
+    assertEquals(LocalTime.of(14, 15, 16), target.getEndTime().get());
+    assertFalse(target.getDayOfWeek().isPresent());
+  }
 
 }

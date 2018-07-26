@@ -25,9 +25,7 @@ public class RateEngine {
   }
 
   public RateOuterClass.Rate getRate(String start, String end) {
-    return dateParser.parse(start)
-      .flatMap(s -> dateParser.parse(end).map(e -> Pair.of(s, e)))
-      .map(p -> new DateTimeRange(p.getLeft(), p.getRight()))
+    return dateParser.parseRange(start, end)
       .flatMap(this::getRate)
       .map(Rate::asAvailablePbRate)
       .orElse(getUnavailableRate());

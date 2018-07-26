@@ -1,5 +1,7 @@
 package justinb99.sampleapi.service.servlet;
 
+import justinb99.sampleapi.engine.util.ResourceProvider;
+import justinb99.sampleapi.engine.util.StreamCopier;
 import org.eclipse.jetty.http.HttpStatus;
 
 import javax.servlet.ServletException;

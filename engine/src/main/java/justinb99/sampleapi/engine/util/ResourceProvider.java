@@ -1,4 +1,4 @@
-package justinb99.sampleapi.service.servlet;
+package justinb99.sampleapi.engine.util;
 
 import java.io.InputStream;
 

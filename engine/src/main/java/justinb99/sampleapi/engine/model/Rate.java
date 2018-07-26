@@ -14,7 +14,6 @@ public class Rate {
   private Integer price;
 
   public Rate() {
-
   }
 
   public Set<DayOfWeek> getDays() {
@@ -51,8 +50,6 @@ public class Rate {
 
   //Per spec, A rate must completely encapsulate a datetime range for it to be available.
   //Rates will never overlap.
-  //assumes start and end are both UTC
-  //TODO: dateTimeRange must be valid--on same day and endTime >= startTime
   public boolean isAvailable(DateTimeRange dateTimeRange) {
     return dateTimeRange.getDayOfWeek()
       .filter(days::contains)

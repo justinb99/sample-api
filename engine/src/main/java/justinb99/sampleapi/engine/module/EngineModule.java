@@ -11,6 +11,7 @@ import com.hubspot.jackson.datatype.protobuf.ProtobufModule;
 import justinb99.sampleapi.engine.model.Rate;
 import justinb99.sampleapi.engine.model.RateConfig;
 import justinb99.sampleapi.engine.model.RatesConfig;
+import justinb99.sampleapi.engine.util.ResourceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +37,7 @@ public class EngineModule extends AbstractModule {
       .toInstance(createXmlMapper());
 
     bind(new TypeLiteral<List<Rate>>() {})
-      .toInstance(loadConfiguredRates(objectMapper));
+      .toInstance(loadConfiguredRates(new ResourceProvider(), objectMapper));
   }
 
   ObjectMapper createObjectMapper() {
@@ -50,13 +51,17 @@ public class EngineModule extends AbstractModule {
   }
 
   private <T extends ObjectMapper> T configureObjectMapper(T objectMapper) {
-    objectMapper.setSerializationInclusion(Include.NON_NULL)
+    objectMapper
+      .setSerializationInclusion(Include.NON_NULL)
       .registerModule(new ProtobufModule());
     return objectMapper;
   }
 
-  List<Rate> loadConfiguredRates(ObjectMapper objectMapper) {
-    var ratesStream = getClass().getResourceAsStream("/rates.json");
+  List<Rate> loadConfiguredRates(
+    ResourceProvider resourceProvider,
+    ObjectMapper objectMapper
+  ) {
+    var ratesStream = resourceProvider.getResourceAsStream("/rates.json");
     var jsonReader = objectMapper.readerFor(RatesConfig.class);
 
     RatesConfig config;

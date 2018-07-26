@@ -1,5 +1,6 @@
 package justinb99.sampleapi.engine.model;
 
+import justinb99.sampleapi.schema.RateOuterClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +14,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import static java.time.DayOfWeek.*;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
@@ -35,6 +37,12 @@ public class RateTest {
     target.setEndTime(END_TIME);
 
     when(dateTimeRange.getDayOfWeek()).thenReturn(Optional.of(MONDAY));
+  }
+
+  @Test
+  public void getters() {
+    assertEquals(START_TIME, target.getStartTime());
+    assertEquals(END_TIME, target.getEndTime());
   }
 
   @Test
@@ -105,6 +113,17 @@ public class RateTest {
     when(dateTimeRange.getEndTime()).thenReturn(Optional.of(START_TIME));
 
     assertTrue(rangeIsAvailableForDays(Set.of(MONDAY)));
+  }
+
+  @Test
+  public void asAvailablePbRate() {
+    var price = 1234;
+    target.setPrice(price);
+    var pbRate = target.asAvailablePbRate();
+    var expectedPbRate = RateOuterClass.Rate.newBuilder()
+      .setPrice(1234)
+      .build();
+    assertEquals(expectedPbRate, pbRate);
   }
 
 }
