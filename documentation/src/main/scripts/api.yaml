@@ -83,9 +83,20 @@ paths:
       - $ref: '#/components/parameters/endParam'
       responses:
         200:
-          description: "Parking Rate"
-          schema:
-            $ref: "#/definitions/Rate"
+          description: >
+                       Parking Rate as XML<br>
+                       Example:<br>
+                       <?xml version="1.0" encoding="UTF-8"?>
+                       <br>
+                       &lt;rate&gt;
+                       <br>
+                       &nbsp;&nbsp;
+                       &lt;price&gt;0&lt;/price&gt;
+                       <br>
+                       &nbsp;&nbsp;
+                       &lt;status&gt;unavailable&lt;/status&gt;
+                       <br>
+                       &lt;/rate&gt;
   /v1/rate.proto:
     get:
       tags:

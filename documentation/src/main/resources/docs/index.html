@@ -433,15 +433,15 @@
                   <div class="prop-row prop-group">
                     <div class="prop-name">
                       <div class="prop-title">200 OK</div>
-                      <div class="prop-ref">
-                        <span class="">
-                          <a class="json-schema-ref" href="#/definitions/Rate">Rate</a>
-                        </span>
-                      </div>
-                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
                     </div>
                     <div class="prop-value">
-                      <p>Parking Rate</p>
+                      <p>Parking Rate as XML
+                        <br> Example:
+                        <br> &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+                        <br> &lt;rate&gt;
+                        <br> &nbsp;&nbsp; &lt;price&gt;0&lt;/price&gt;
+                        <br> &nbsp;&nbsp; &lt;status&gt;unavailable&lt;/status&gt;
+                        <br> &lt;/rate&gt;</p>
                     </div>
                   </div>
                 </section>
@@ -450,17 +450,6 @@
                 <h5>Response Content-Types:
                   <span>application/xml</span>
                 </h5>
-                <section>
-                  <h5>Response Example
-                    <span>(200 OK)</span>
-                  </h5>
-                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
-  <span class="hljs-attr">&quot;price&quot;</span>: <span class="hljs-string">&quot;integer (int32)&quot;</span>,
-  <span class="hljs-attr">&quot;status&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
-}
-</code></pre>
-                  <!-- </div> -->
-                </section>
               </div>
             </div>
           </div>
