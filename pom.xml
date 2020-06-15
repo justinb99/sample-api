@@ -23,7 +23,7 @@
         <maven.compiler.source>1.10</maven.compiler.source>
         <maven.compiler.target>1.10</maven.compiler.target>
         <GUICE_VERSION>4.2.0</GUICE_VERSION>
-        <JACKSON_VERSION>2.9.6</JACKSON_VERSION>
+        <JACKSON_VERSION>2.11.0</JACKSON_VERSION>
         <RXJAVA_VERSION>2.1.14</RXJAVA_VERSION>
         <JERSEY_VERSION>2.27</JERSEY_VERSION>
         <METRICS_VERSION>4.0.0</METRICS_VERSION>
